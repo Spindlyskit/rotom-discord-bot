@@ -1,15 +1,19 @@
+'use strict'
+
 const commando = require('discord.js-commando');
 const path = require('path');
 const oneLine = require('common-tags').oneLine;
 const sqlite = require('sqlite');
 const config = require('config.json')('./config.json');
-
-const modlog = require("./modlog.js");
+const dataparser = require('./utilitys/dataparser.js');
 
 const client = new commando.Client({
 	owner: config.owner,
 	commandPrefix: '!'
 });
+
+const parser = new dataparser.Parser(client);
+client.parser = parser;
 
 client
 	.on('error', console.error)
@@ -54,6 +58,7 @@ client
 client.registry
     .registerDefaults()
     .registerGroups([
+		['data', 'Data'],
 		['info', 'Informational'],
 		['opt', 'Option'],
 		['driver', 'Driver'],
@@ -70,3 +75,5 @@ client.setProvider(
 
     
 client.login(config.token);
+
+console.log(parser.parseAbility("dancer"));
