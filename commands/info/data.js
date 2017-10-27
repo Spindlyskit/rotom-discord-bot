@@ -6,7 +6,7 @@ module.exports = class DataCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'data',
-            group: 'data',
+            group: 'info',
             memberName: 'data',
             description: 'Get details on this pokemon/item/move/ability/nature.',
             examples: ['data <pokemon/item/move/ability>'],
@@ -25,7 +25,7 @@ module.exports = class DataCommand extends Command {
         let embedGen = parser.EmbedGenerator;
 
         if (parser.getAliasOf(arg1)) arg1 = parser.getAliasOf(arg1);
-        let res = parser.parseThenGen(arg1);
+        let res = parser.parse(arg1);
         if (!res) return msg.say(`${arg1.toLowerCase()} is not a pokemon/item/move/ability!`)
         else return msg.embed(res);
     }

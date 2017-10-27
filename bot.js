@@ -58,7 +58,6 @@ client
 client.registry
     .registerDefaults()
     .registerGroups([
-		['data', 'Data'],
 		['info', 'Informational'],
 		['opt', 'Option'],
 		['driver', 'Driver'],
