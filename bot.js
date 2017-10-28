@@ -6,14 +6,15 @@ const oneLine = require('common-tags').oneLine;
 const sqlite = require('sqlite');
 const config = require('config.json')('./config.json');
 const dataparser = require('./utilitys/dataparser.js');
+const rankmanager = require('./utilitys/rankmanager.js')
 
 const client = new commando.Client({
 	owner: config.owner,
 	commandPrefix: '!'
 });
 
-const parser = new dataparser.Parser(client);
-client.parser = parser;
+client.parser = new dataparser.Parser(client);;
+client.rankmanager = new rankmanager.GuildRankManager(client);
 
 client
 	.on('error', console.error)
@@ -74,5 +75,3 @@ client.setProvider(
 
     
 client.login(config.token);
-
-console.log(parser.parseAbility("dancer"));
