@@ -15,7 +15,6 @@ module.exports.aliases = {
 }
 
 module.exports.symbols = {
-    "$": "botowner",
     "~": "administrator",
     "&": "leader",
     "*": "bot",
@@ -23,5 +22,15 @@ module.exports.symbols = {
     "%": "driver",
     "+": "voice"
 }
+
+module.exports.hierarchy = [
+    "voice",
+    "driver",
+    "moderator",
+    "bot",
+    "roomowner",
+    "leader",
+    "administrator",
+];
 
 module.exports.top = 7;

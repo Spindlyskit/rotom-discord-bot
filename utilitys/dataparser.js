@@ -10,22 +10,23 @@ const items = require("../data/items.js");
 const learnsets = require("../data/learnsets.js");
 const moves = require("../data/moves.js");
 const pokedex = require("../data/pokedex.js");
-const statuses = require("../data/statuses.js");
 const typechart = require("../data/typechart.js");
 
 class EmbedGenerator {
-    constructor(client) {
-        this.client = client;
+    constructor(parser) {
+        this.parser = parser;
     }
 
-    generateAbilityEmbed(ability) {
+    generateAbilityEmbed(ability, parser) {
         return new RichEmbed()
         .setDescription(`${ability.desc}`)
         .setAuthor(ability.name)
         .setColor(0x00AE86)
         .setTimestamp();
     }
-    generatePokemonEmbed(pokemon) {
+    generatePokemonEmbed(pokemon, parser) {
+        let weakChart = parser.weak(pokemon);
+
         return new RichEmbed()
         .setAuthor(`${pokemon.num.toString()} - ${pokemon.species}`)
         .setColor(0x00AE86)
@@ -41,11 +42,31 @@ class EmbedGenerator {
         .setTimestamp()
         .addField(`Types`, `${pokemon.types.join(", ")}`)
         .addField(`Abilities`, `${Object.values(pokemon.abilities).join(", ")}`)
+        .addField(`Weakness & Resistance`, stripIndents`
+        *1x values are ommited use \`weak ${weakChart.pokemon} true\` to show.*`
+        + `${weakChart["Bug"] != 1 ? `\n**Bug**: ${weakChart["Bug"]}`: ""}`
+        + `${weakChart["Dark"] != 1 ? `\n**Dark**: ${weakChart["Dark"]}`: ""}`
+        + `${weakChart["Dragon"] != 1 ? `\n**Dragon**: ${weakChart["Dragon"]}`: ""}`
+        + `${weakChart["Electric"] != 1 ? `\n**Electric**: ${weakChart["Electric"]}`: ""}`
+        + `${weakChart["Fairy"] != 1 ? `\n**Fairy**: ${weakChart["Fairy"]}`: ""}`
+        + `${weakChart["Fighting"] != 1 ? `\n**Fighting**: ${weakChart["Fighting"]}`: ""}`
+        + `${weakChart["Fire"] != 1 ? `\n**Fire**: ${weakChart["Fire"]}`: ""}`
+        + `${weakChart["Flying"] != 1 ? `\n**Flying**: ${weakChart["Flying"]}`: ""}`
+        + `${weakChart["Ghost"] != 1 ? `\n**Ghost**: ${weakChart["Ghost"]}`: ""}`
+        + `${weakChart["Grass"] != 1 ? `\n**Grass**: ${weakChart["Grass"]}`: ""}`
+        + `${weakChart["Ground"] != 1 ? `\n**Ground**: ${weakChart["Ground"]}`: ""}`
+        + `${weakChart["Ice"] != 1 ? `\n**Ice**: ${weakChart["Ice"]}`: ""}`
+        + `${weakChart["Normal"] != 1 ? `\n**Normal**: ${weakChart["Normal"]}`: ""}`
+        + `${weakChart["Poison"] != 1 ? `\n**Poison**: ${weakChart["Poison"]}`: ""}`
+        + `${weakChart["Psychic"] != 1 ? `\n**Psychic**: ${weakChart["Psychic"]}`: ""}`
+        + `${weakChart["Rock"] != 1 ? `\n**Rock**: ${weakChart["Rock"]}`: ""}`
+        + `${weakChart["Steel"] != 1 ? `\n**Steel**: ${weakChart["Steel"]}`: ""}`
+        + `${weakChart["Water"] != 1 ? `\n**Water**: ${weakChart["Water"]}`: ""}`)
         .addField(`Misc`, stripIndents`**Height (M):** ${pokemon.heightm}
         **Weight (KG):** ${pokemon.weightkg}
         **Color:** ${pokemon.color}`)
     }
-    generateItemEmbed(item) {
+    generateItemEmbed(item, parser) {
         return new RichEmbed()
         .setDescription(`${item.desc}`)
         .setAuthor(item.name)
@@ -53,7 +74,7 @@ class EmbedGenerator {
         .setThumbnail(`https://www.serebii.net/itemdex/sprites/pgl/${item.id}.png`)
         .setTimestamp();
     }
-    generateMoveEmbed(move) {
+    generateMoveEmbed(move, parser) {
         return new RichEmbed()
         .setAuthor(`${move.name}`)
         .setColor(0x00AE86)
@@ -95,24 +116,24 @@ class EmbedGenerator {
             .setDescription(stripIndents`
             \n*Damage multiplyers for ${weakChart.pokemon}*
             *1x values are ommited use \`weak ${weakChart.pokemon} true\` to show.*`
-            + `${weakChart["Bug"] != 1 ? `\n**Bug**: ${weakChart["Bug"]}\n`: ""}`
-            + `${weakChart["Dark"] != 1 ? `**Dark**: ${weakChart["Dark"]}\n`: ""}`
-            + `${weakChart["Dragon"] != 1 ? `**Dragon**: ${weakChart["Dragon"]}\n`: ""}`
-            + `${weakChart["Electric"] != 1 ? `**Electric**: ${weakChart["Electric"]}\n`: ""}`
-            + `${weakChart["Fairy"] != 1 ? `**Fairy**: ${weakChart["Fairy"]}\n`: ""}`
-            + `${weakChart["Fighting"] != 1 ? `**Fighting**: ${weakChart["Fighting"]}\n`: ""}`
-            + `${weakChart["Fire"] != 1 ? `**Fire**: ${weakChart["Fire"]}\n`: ""}`
-            + `${weakChart["Flying"] != 1 ? `**Flying**: ${weakChart["Flying"]}\n`: ""}`
-            + `${weakChart["Ghost"] != 1 ? `**Ghost**: ${weakChart["Ghost"]}\n`: ""}`
-            + `${weakChart["Grass"] != 1 ? `**Grass**: ${weakChart["Grass"]}\n`: ""}`
-            + `${weakChart["Ground"] != 1 ? `**Ground**: ${weakChart["Ground"]}\n`: ""}`
-            + `${weakChart["Ice"] != 1 ? `**Ice**: ${weakChart["Ice"]}\n`: ""}`
-            + `${weakChart["Normal"] != 1 ? `**Normal**: ${weakChart["Normal"]}\n`: ""}`
-            + `${weakChart["Poison"] != 1 ? `**Poison**: ${weakChart["Poison"]}\n`: ""}`
-            + `${weakChart["Psychic"] != 1 ? `**Psychic**: ${weakChart["Psychic"]}\n`: ""}`
-            + `${weakChart["Rock"] != 1 ? `**Rock**: ${weakChart["Rock"]}\n`: ""}`
-            + `${weakChart["Steel"] != 1 ? `**Steel**: ${weakChart["Steel"]}\n`: ""}`
-            + `${weakChart["Water"] != 1 ? `**Water**: ${weakChart["Water"]}`: ""}`
+            + `${weakChart["Bug"] != 1 ? `\n**Bug**: ${weakChart["Bug"]}`: ""}`
+            + `${weakChart["Dark"] != 1 ? `\n**Dark**: ${weakChart["Dark"]}`: ""}`
+            + `${weakChart["Dragon"] != 1 ? `\n**Dragon**: ${weakChart["Dragon"]}`: ""}`
+            + `${weakChart["Electric"] != 1 ? `\n**Electric**: ${weakChart["Electric"]}`: ""}`
+            + `${weakChart["Fairy"] != 1 ? `\n**Fairy**: ${weakChart["Fairy"]}`: ""}`
+            + `${weakChart["Fighting"] != 1 ? `\n**Fighting**: ${weakChart["Fighting"]}`: ""}`
+            + `${weakChart["Fire"] != 1 ? `\n**Fire**: ${weakChart["Fire"]}`: ""}`
+            + `${weakChart["Flying"] != 1 ? `\n**Flying**: ${weakChart["Flying"]}`: ""}`
+            + `${weakChart["Ghost"] != 1 ? `\n**Ghost**: ${weakChart["Ghost"]}`: ""}`
+            + `${weakChart["Grass"] != 1 ? `\n**Grass**: ${weakChart["Grass"]}`: ""}`
+            + `${weakChart["Ground"] != 1 ? `\n**Ground**: ${weakChart["Ground"]}`: ""}`
+            + `${weakChart["Ice"] != 1 ? `\n**Ice**: ${weakChart["Ice"]}`: ""}`
+            + `${weakChart["Normal"] != 1 ? `\n**Normal**: ${weakChart["Normal"]}`: ""}`
+            + `${weakChart["Poison"] != 1 ? `\n**Poison**: ${weakChart["Poison"]}`: ""}`
+            + `${weakChart["Psychic"] != 1 ? `\n**Psychic**: ${weakChart["Psychic"]}`: ""}`
+            + `${weakChart["Rock"] != 1 ? `\n**Rock**: ${weakChart["Rock"]}`: ""}`
+            + `${weakChart["Steel"] != 1 ? `\n**Steel**: ${weakChart["Steel"]}`: ""}`
+            + `${weakChart["Water"] != 1 ? `\n**Water**: ${weakChart["Water"]}`: ""}`
             )
             .setAuthor(weakChart.pokemon)
             .setColor(0x00AE86)
@@ -124,14 +145,14 @@ class EmbedGenerator {
 class Parser {
     constructor(client) {
         this.client = client;
-        this.EmbedGenerator = new EmbedGenerator(client);
+        this.EmbedGenerator = new EmbedGenerator(this);
 
         this.types = ["ability", "pokemon", "item", "move"];
         
         this.generators = {
             "ability": this.EmbedGenerator.generateAbilityEmbed,
             "pokemon": this.EmbedGenerator.generatePokemonEmbed,
-            "item": this.EmbedGenerator.generatePokemonEmbed,
+            "item": this.EmbedGenerator.generateItemEmbed,
             "move": this.EmbedGenerator.generateMoveEmbed,
         }
     
@@ -193,16 +214,16 @@ class Parser {
         for (let i=0; i<this.types.length; i++) {
             let type = this.types[i];
             if (this.dataArrays[type].hasOwnProperty(name)) { // If the name is in the array
-                return this.generators[type](this.dataArrays[type][name]);
+                return this.generators[type](this.dataArrays[type][name], this);
             } else if (m.get(name)){
                 name = m.get(name);
-                if (this.dataArrays[type].hasOwnProperty(name)) return this.generators[type](this.dataArrays[type][name]);
+                if (this.dataArrays[type].hasOwnProperty(name)) return this.generators[type](this.dataArrays[type][name], this);
             } 
         }
         return false;
     }
 
-    weak(pokemon, type) {
+    weak(pokemon) {
         let types = Object.keys(typechart.BattleTypeChart);
         let weakChart = {
             pokemon: pokemon.species,

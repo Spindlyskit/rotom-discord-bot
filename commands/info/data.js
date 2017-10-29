@@ -6,6 +6,7 @@ module.exports = class DataCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'data',
+            aliases: ['dt', 'dex', 'pokedex', 'pokemon', 'item', 'move', 'ability', 'nature'],
             group: 'info',
             memberName: 'data',
             description: 'Get details on this pokemon/item/move/ability/nature.',
