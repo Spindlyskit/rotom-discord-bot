@@ -3,6 +3,7 @@
 const { RichEmbed } = require('discord.js');
 const Matcher = require('did-you-mean');
 const stripIndents = require('common-tags').stripIndents;
+const config = require('config.json')('./config.json');
 
 const abilities = require("../data/abilities.js");
 const aliases = require("../data/aliases.js");
@@ -21,7 +22,7 @@ class EmbedGenerator {
         return new RichEmbed()
         .setDescription(`${ability.desc}`)
         .setAuthor(ability.name)
-        .setColor(0x00AE86)
+        .setColor(config.embedColor)
         .setTimestamp();
     }
     generatePokemonEmbed(pokemon, parser) {
@@ -29,7 +30,7 @@ class EmbedGenerator {
 
         return new RichEmbed()
         .setAuthor(`${pokemon.num.toString()} - ${pokemon.species}`)
-        .setColor(0x00AE86)
+        .setColor(config.embedColor)
         .setDescription(stripIndents`
         **HP:** ${pokemon.baseStats.hp}
         **Atk:** ${pokemon.baseStats.atk}
@@ -70,14 +71,14 @@ class EmbedGenerator {
         return new RichEmbed()
         .setDescription(`${item.desc}`)
         .setAuthor(item.name)
-        .setColor(0x00AE86)
+        .setColor(config.embedColor)
         .setThumbnail(`https://www.serebii.net/itemdex/sprites/pgl/${item.id}.png`)
         .setTimestamp();
     }
     generateMoveEmbed(move, parser) {
         return new RichEmbed()
         .setAuthor(`${move.name}`)
-        .setColor(0x00AE86)
+        .setColor(config.embedColor)
         .setDescription(stripIndents`
         ${move.desc}`)
         .setTimestamp()
@@ -109,7 +110,7 @@ class EmbedGenerator {
             **Water**: ${weakChart["Water"]}
             `)
             .setAuthor(weakChart.pokemon)
-            .setColor(0x00AE86)
+            .setColor(config.embedColor)
             .setTimestamp();
         } else {
             return new RichEmbed()
@@ -136,7 +137,7 @@ class EmbedGenerator {
             + `${weakChart["Water"] != 1 ? `\n**Water**: ${weakChart["Water"]}`: ""}`
             )
             .setAuthor(weakChart.pokemon)
-            .setColor(0x00AE86)
+            .setColor(config.embedColor)
             .setTimestamp();
         }
     }
@@ -221,6 +222,28 @@ class Parser {
             } 
         }
         return false;
+    }
+
+    learn(pokemon, move) {
+        let { BattleLearnsets } = learnsets;
+
+        let moveMatcher = new Matcher(Object.keys(items.BattleMovedex).join(" "));
+        moveMatcher.setThreshold(3);
+        if (!moves.BattleMovedex.hasOwnProperty(move) && moveMatcher.get(move)) move = moveMatcher.get(move);
+        move = move.toLowerCase().replace(" ", "");
+        if (moves.BattleMovedex.hasOwnProperty(move)) return `${move} is not a move!`;
+
+
+        let monMatcher = new Matcher(Object.keys(pokemon.BattlePokedex).join(" "));
+        monMatcher.setThreshold(3);
+        if (!pokedex.BattlePokedex.hasOwnProperty(move) && monMatcher.get(move)) move = monMatcher.get(move);
+        pokemon = pokemon.toLowerCase().replace(" ", "");
+        
+        if (!BattleLearnsets[pokemon]) return `${pokemon} is not a pokemon!`;
+        let pokemonLearnsets = BattleLearnsets[pokemon].learnset;
+        if (!Object.keys(pokemonLearnsets).includes(move)) return `${pokemon} cannot learn ${move} in gen 7!`;
+        // Pokemon can learn move
+        return `${pokemon} can learn ${move} in gen 7!` // Temp
     }
 
     weak(pokemon) {
