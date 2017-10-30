@@ -243,7 +243,20 @@ class Parser {
         let pokemonLearnsets = BattleLearnsets[pokemon].learnset;
         if (!Object.keys(pokemonLearnsets).includes(move)) return `${pokemon} cannot learn ${move} in gen 7!`;
         // Pokemon can learn move
-        return `${pokemon} can learn ${move} in gen 7!` // Temp
+        let sourceNames = {E:"egg", S:"event", D:"dream world", M: "technical or hidden machine", L: "level [level]", V:"virtual console transfer from gen 1", X:"egg, traded back", Y:"event, traded back"};
+        let souceID = Object.keys(sourceNames);
+        let learnMethod = BattleLearnsets[pokemon].learnset[move];
+        let ret = {
+            Levelup: [false],
+            Tutor: [false],
+            Technical: [false],
+            Egg: [false],
+            Virtual: [false],
+        }
+        return `in gen ${parseInt(learnMethod[0].charAt())} ${pokemon} can learn ${move} from ${sourceNames[learnMethod[0].charAt(1)].replace("[level]", learnMethod[0].substring(2))}`;
+        for (let i=1; i>=learnMethod.length; i++) {
+            
+        }
     }
 
     weak(pokemon) {
