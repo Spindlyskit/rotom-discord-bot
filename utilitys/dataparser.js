@@ -141,6 +141,18 @@ class EmbedGenerator {
             .setTimestamp();
         }
     }
+    generateLearnEmbed(learn) {
+        let { pokemon, move, ret } = learn;
+        let final = "";
+        for (let i=1; i<=ret.length; i++) {
+            final = final + `** **- gen ${ret[i-1].generation} ${ret[i-1].source} \n`
+        }
+        return new RichEmbed()
+        .setAuthor(`${pokedex.BattlePokedex[pokemon].species} can learn ${moves.BattleMovedex[move].name}!`)
+        .setColor(config.embedColor)
+        .setDescription(final)
+        .setTimestamp()
+    }
 }
 
 class Parser {
@@ -243,20 +255,20 @@ class Parser {
         let pokemonLearnsets = BattleLearnsets[pokemon].learnset;
         if (!Object.keys(pokemonLearnsets).includes(move)) return `${pokemon} cannot learn ${move} in gen 7!`;
         // Pokemon can learn move
-        let sourceNames = {E:"egg", S:"event", D:"dream world", M: "technical or hidden machine", L: "level [level]", V:"virtual console transfer from gen 1", X:"egg, traded back", Y:"event, traded back"};
+        let sourceNames = {E:"egg", S:"event", D:"dream world", M: "technical or hidden machine", L: "level [level]", T: "tutor", V:"virtual console transfer from gen 1", E:"egg", Y:"event, traded back"};
         let souceID = Object.keys(sourceNames);
         let learnMethod = BattleLearnsets[pokemon].learnset[move];
-        let ret = {
-            Levelup: [false],
-            Tutor: [false],
-            Technical: [false],
-            Egg: [false],
-            Virtual: [false],
+        let ret = [];
+    
+        for (let i=1; i<=learnMethod.length; i++) {
+            let gen = parseInt(learnMethod[i-1].charAt());
+            let source = sourceNames[learnMethod[i-1].charAt(1)].replace("[level]", learnMethod[i-1].substring(2));
+            ret.push({
+                generation: gen,
+                source, source
+            });
         }
-        return `in gen ${parseInt(learnMethod[0].charAt())} ${pokemon} can learn ${move} from ${sourceNames[learnMethod[0].charAt(1)].replace("[level]", learnMethod[0].substring(2))}`;
-        for (let i=1; i>=learnMethod.length; i++) {
-            
-        }
+        return {ret: ret, pokemon: pokemon, move: move};
     }
 
     weak(pokemon) {
