@@ -1,0 +1,6 @@
+{
+    "token": "TOKEN",
+    "owner": "YOUR ID",
+    "commandPrefix": "COMMAND PREFIX (DEFAULT: !)",
+    "embedColor": "HEX COLOR (DEFAULT: #C749B7)"
+  }
