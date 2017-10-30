@@ -25,6 +25,7 @@
 *.log
 *.sql
 *.sqlite
+*.sqlite3
 
 # OS generated files #
 ######################
@@ -45,6 +46,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
 
 # Runtime data
 pids
