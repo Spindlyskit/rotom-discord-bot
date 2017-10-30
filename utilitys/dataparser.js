@@ -227,16 +227,16 @@ class Parser {
     learn(pokemon, move) {
         let { BattleLearnsets } = learnsets;
 
-        let moveMatcher = new Matcher(Object.keys(items.BattleMovedex).join(" "));
+        let moveMatcher = new Matcher(Object.keys(moves.BattleMovedex).join(" "));
         moveMatcher.setThreshold(3);
         if (!moves.BattleMovedex.hasOwnProperty(move) && moveMatcher.get(move)) move = moveMatcher.get(move);
         move = move.toLowerCase().replace(" ", "");
-        if (moves.BattleMovedex.hasOwnProperty(move)) return `${move} is not a move!`;
+        if (!moves.BattleMovedex.hasOwnProperty(move)) return `${move} is not a move!`;
 
 
-        let monMatcher = new Matcher(Object.keys(pokemon.BattlePokedex).join(" "));
+        let monMatcher = new Matcher(Object.keys(pokedex.BattlePokedex).join(" "));
         monMatcher.setThreshold(3);
-        if (!pokedex.BattlePokedex.hasOwnProperty(move) && monMatcher.get(move)) move = monMatcher.get(move);
+        if (!pokedex.BattlePokedex.hasOwnProperty(pokemon) && monMatcher.get(pokemon)) pokemon = monMatcher.get(pokemon);
         pokemon = pokemon.toLowerCase().replace(" ", "");
         
         if (!BattleLearnsets[pokemon]) return `${pokemon} is not a pokemon!`;
