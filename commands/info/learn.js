@@ -10,7 +10,7 @@ module.exports = class LearnCommand extends Command {
             group: 'info',
             memberName: 'learn',
             description: 'Get details on this pokemon/item/move/ability/nature.',
-            examples: ['data <pokemon/item/move/ability>'],
+            examples: ['learn pikachu thunder', 'learn arcanine, helping hand', 'learn "tapu lele" "moonblast"'],
             args: [
                 {
                     key: 'pokemon',
