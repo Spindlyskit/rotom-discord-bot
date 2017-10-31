@@ -11,7 +11,7 @@ module.exports = class ModchatCommand extends Command {
             memberName: 'modchat',
             description: 'Set modchat.',
             examples: ['modchat +', 'modchat ~', 'modchat off'],
-            clientPermissions: ['MANAGE_CHANNELS'],
+            clientPermissions: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
             args: [
                 {
                     key: 'rank',
