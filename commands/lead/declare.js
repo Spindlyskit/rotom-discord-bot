@@ -4,7 +4,7 @@ const { Command } = require('discord.js-commando');
 const config = require('config.json')('./config.json')
 const { RichEmbed } = require('discord.js');
 
-module.exports = class EmbedCommand extends Command {
+module.exports = class DeclareCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'declare',
