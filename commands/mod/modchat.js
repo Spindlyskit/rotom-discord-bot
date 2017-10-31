@@ -7,7 +7,7 @@ module.exports = class ModchatCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'modchat',
-            group: 'info',
+            group: 'mod',
             memberName: 'modchat',
             description: 'Set modchat.',
             examples: ['modchat +', 'modchat ~', 'modchat off'],
