@@ -63,6 +63,7 @@ client.registry
     .registerGroups([
 		['info', 'Informational'],
 		['opt', 'Option'],
+		['voice', 'Voice'],
 		['driver', 'Driver'],
 		['mod', 'Moderator'],
 		['lead', 'Leader'],

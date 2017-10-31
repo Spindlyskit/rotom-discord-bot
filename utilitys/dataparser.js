@@ -142,16 +142,24 @@ class EmbedGenerator {
         }
     }
     generateLearnEmbed(learn) {
-        let { pokemon, move, ret } = learn;
-        let final = "";
-        for (let i=1; i<=ret.length; i++) {
-            final = final + `** **- gen ${ret[i-1].generation} ${ret[i-1].source} \n`
+        let { pokemon, move, ret, suc } = learn;
+        if (suc) {
+            let final = "";
+            for (let i=1; i<=ret.length; i++) {
+                final = final + `** **- gen ${ret[i-1].generation} ${ret[i-1].source} \n`
+            }
+            return new RichEmbed()
+            .setAuthor(`${pokedex.BattlePokedex[pokemon].species} can learn ${moves.BattleMovedex[move].name}!`)
+            .setColor(config.embedColor)
+            .setDescription(final)
+            .setTimestamp()
+        } else {
+            return new RichEmbed()
+            .setAuthor(`${pokemon} can't learn ${move}!`)
+            .setColor(config.embedColor)
+            .setDescription(ret)
+            .setTimestamp()
         }
-        return new RichEmbed()
-        .setAuthor(`${pokedex.BattlePokedex[pokemon].species} can learn ${moves.BattleMovedex[move].name}!`)
-        .setColor(config.embedColor)
-        .setDescription(final)
-        .setTimestamp()
     }
 }
 
@@ -243,17 +251,16 @@ class Parser {
         moveMatcher.setThreshold(3);
         if (!moves.BattleMovedex.hasOwnProperty(move) && moveMatcher.get(move)) move = moveMatcher.get(move);
         move = move.toLowerCase().replace(" ", "");
-        if (!moves.BattleMovedex.hasOwnProperty(move)) return `${move} is not a move!`;
-
+        if (!moves.BattleMovedex.hasOwnProperty(move)) return {ret: `${move} is not a move!`, pokemon: pokemon, suc: false, move: move};
 
         let monMatcher = new Matcher(Object.keys(pokedex.BattlePokedex).join(" "));
         monMatcher.setThreshold(3);
         if (!pokedex.BattlePokedex.hasOwnProperty(pokemon) && monMatcher.get(pokemon)) pokemon = monMatcher.get(pokemon);
         pokemon = pokemon.toLowerCase().replace(" ", "");
         
-        if (!BattleLearnsets[pokemon]) return `${pokemon} is not a pokemon!`;
+        if (!BattleLearnsets[pokemon]) return {ret: `${pokemon} is not a pokemon!`, pokemon: pokemon, suc: false, move: move};
         let pokemonLearnsets = BattleLearnsets[pokemon].learnset;
-        if (!Object.keys(pokemonLearnsets).includes(move)) return `${pokemon} cannot learn ${move} in gen 7!`;
+        if (!Object.keys(pokemonLearnsets).includes(move)) return {ret: `${move} not found in ${pokemon}'s learnset!`, pokemon: pokemon, suc: false, move: move};
         // Pokemon can learn move
         let sourceNames = {E:"egg", S:"event", D:"dream world", M: "technical or hidden machine", L: "level [level]", T: "tutor", V:"virtual console transfer from gen 1", E:"egg", Y:"event, traded back"};
         let souceID = Object.keys(sourceNames);
@@ -268,7 +275,7 @@ class Parser {
                 source, source
             });
         }
-        return {ret: ret, pokemon: pokemon, move: move};
+        return {ret: ret, pokemon: pokemon,suc: true, move: move};
     }
 
     weak(pokemon) {
