@@ -54,18 +54,16 @@ module.exports = class EmbedCommand extends Command {
         return msg.client.rankmanager.hasRank("&", msg.guild, msg.member).ret;
     }
 
-    run(msg, { title, description, color, image }) {
+    run(msg, { channel, title, description, color, image }) {
         msg.delete();
         msg.guild.fetchMember(msg.client.user)
-        .then(function(client) {
-            channel.sendEmbed(new RichEmbed()
-                .setDescription(description)
-                .setTitle(title)
-                .setAuthor(client.username, client.avatarURL)
-                .setColor(`${color == '' ? config.embedColor : color}`)
-                .setImage(`${image == '' ? image : null}`)
-                .setTimestamp()
-            )
-        });
+        channel.sendEmbed(new RichEmbed()
+            .setDescription(description)
+            .setTitle(title)
+            .setAuthor(msg.client.user.username, msg.client.user.avatarURL)
+            .setColor(`${color == '' ? config.embedColor : color}`)
+            .setImage(`${image == '' ? image : null}`)
+            .setTimestamp()
+        )
     }
 };
