@@ -50,7 +50,7 @@ module.exports = class EmbedCommand extends Command {
     }
 
     run(msg, { title, description, color, image }) {
-        console.log(config);
+        msg.delete();
         msg.embed(new RichEmbed()
             .setDescription(description)
             .setTitle(title)

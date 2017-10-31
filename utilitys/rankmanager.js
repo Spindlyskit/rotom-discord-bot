@@ -1,22 +1,17 @@
 'use strict'
 
 const { ranks, aliases, symbols, top, hierarchy } = require("../data/ranks.js")
-const Matcher = require('did-you-mean');
 
 class GuildRankManager {
     constructor (client) {
         this.client = client;
         this.provider = client.provider;
-        this.rankMatcher = new Matcher(Object.keys(ranks).concat(Object.keys(aliases)).join(" "));
-        this.rankMatcher.setThreshold(3);
     }
 
     getRank(rank, guild) {
         let client = this.client
         if (symbols.hasOwnProperty(rank)) rank = symbols[rank];
         if (aliases.hasOwnProperty(rank)) rank = aliases[rank];
-        let m = this.rankMatcher.get(rank);
-        if (m) rank = m;
 
         if (!ranks.hasOwnProperty(rank)) {
             return {
@@ -46,8 +41,6 @@ class GuildRankManager {
         let client = this.client
         if (symbols.hasOwnProperty(rank)) rank = symbols[rank];
         if (aliases.hasOwnProperty(rank)) rank = aliases[rank];
-        let m = this.rankMatcher.get(rank);
-        if (m) rank = m;
 
         if (!ranks.hasOwnProperty(rank)) {
             return {
@@ -70,8 +63,6 @@ class GuildRankManager {
         let client = this.client
         if (symbols.hasOwnProperty(rank)) rank = symbols[rank];
         if (aliases.hasOwnProperty(rank)) rank = aliases[rank];
-        let m = this.rankMatcher.get(rank);
-        if (m) rank = m;
 
         if (!ranks.hasOwnProperty(rank)) {
             return {

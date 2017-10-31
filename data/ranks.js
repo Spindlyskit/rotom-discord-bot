@@ -1,7 +1,6 @@
 module.exports.ranks = {
-    "administrator": {name: "Administrator", symobl: "~", hierarchy: 7},
-    "leader": {name: "Leader", symobl: "&", hierarchy: 6},
-    "roomowner": {name: "Room Owner", symobl: "#", hierarchy: 5},
+    "administrator": {name: "Administrator", symobl: "~", hierarchy: 6},
+    "leader": {name: "Leader", symobl: "&", hierarchy: 5},
     "bot": {name: "Bot", symobl: "*", hierarchy: 4},
     "moderator": {name: "Moderator", symobl: "@", hierarchy: 3},
     "driver": {name: "Driver", symobl: "%", hierarchy: 2},
@@ -28,9 +27,8 @@ module.exports.hierarchy = [
     "driver",
     "moderator",
     "bot",
-    "roomowner",
     "leader",
     "administrator",
 ];
 
-module.exports.top = 7;
+module.exports.top = 6;

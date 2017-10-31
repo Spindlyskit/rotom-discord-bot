@@ -1,7 +1,7 @@
 'use strict'
 
 const { Command } = require('discord.js-commando');
-const { symbols, hierarchy, top } = require("../../data/ranks.js")
+const { symbols, hierarchy, top, aliases } = require("../../data/ranks.js")
 
 module.exports = class ModchatCommand extends Command {
     constructor(client) {
@@ -18,8 +18,7 @@ module.exports = class ModchatCommand extends Command {
                     prompt: 'What rank can chat?',
                     type: 'string',
                     validate: text => {
-                        if (Object.keys(symbols).includes(text) || hierarchy.includes(text) || text == "off") return true;
-                        console.log(Object.keys(symbols));
+                        if (Object.keys(symbols).includes(text) || Object.keys(aliases).includes(text) || hierarchy.includes(text) || text == "off") return true;
                         return false;
                     }
                 }
