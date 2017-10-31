@@ -66,6 +66,7 @@ class GuildRankManager {
     }
 
     hasRank(rank, guild, member) {
+        if (!guild) return false;
         let client = this.client
         if (symbols.hasOwnProperty(rank)) rank = symbols[rank];
         if (aliases.hasOwnProperty(rank)) rank = aliases[rank];
