@@ -44,7 +44,7 @@ module.exports = class PromoteCommand extends Command {
 
         for (let i=0; i<hierarchy.length; i++) {
             if (rankmanager.hasRank(hierarchy[i], msg.guild, msg.member).ret) {
-                member.removeRole(rankManager.getrank(hierarchy[i], msg.guild), `${msg.author.tag} used promote command in ${msg.channel.name}`)
+                member.removeRole(rankmanager.getrank(hierarchy[i], msg.guild), `${msg.author.tag} used promote command in ${msg.channel.name}`)
                 .catch(console.error);
             }
         }
