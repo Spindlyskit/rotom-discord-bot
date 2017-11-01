@@ -35,7 +35,7 @@ module.exports = class ForceroleCommand extends Command {
         let client = msg.client;
         
         member.addRole(role, `${msg.author.tag} used forcerole command in ${msg.channel.name}`)
-        .then(role => msg.say(`Added ${role.name} to ${member.user.tag}`))
+        .then(msg.say(`Added ${role.name} to ${member.user.tag}`))
         .catch(console.error);
     }
 };

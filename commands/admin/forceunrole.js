@@ -37,7 +37,7 @@ module.exports = class forceunroleCommand extends Command {
         if (!member.roles.has(role.id)) return msg.say(`Member doesn't have ${role.name}!`);
 
         member.removeRole(role, `${msg.author.tag} used forceunrole command in ${msg.channel.name}`)
-        .then(role => msg.say(`removed ${role.name} from ${member.user.tag}`))
+        .then(msg.say(`removed ${role.name} from ${member.user.tag}`))
         .catch(console.error);
     }
 };
