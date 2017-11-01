@@ -32,7 +32,7 @@ module.exports = class ForcedeleteroleCommand extends Command {
 
         try {
             role.delete();
-        } catch {
+        } catch(e) {
             return msg.say(`Cannot delete ${rolename}`);
         }
         finally {
