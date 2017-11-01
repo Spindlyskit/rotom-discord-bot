@@ -11,7 +11,7 @@ module.exports = class forcecreateroleCommand extends Command {
             memberName: 'forcecreaterole',
             description: 'forcecreaterole a user.\nRequires ~',
             examples: ['forcecreaterole Spindlyskit Administrator'],
-            aliases: ['globalforcecreaterole', 'createrole'],
+            aliases: ['globalforcecreaterole'],
             args: [
                 {
                     key: 'name',
