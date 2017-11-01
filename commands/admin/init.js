@@ -9,7 +9,7 @@ module.exports = class DataCommand extends Command {
             name: 'init',
             group: 'admin',
             memberName: 'init',
-            description: 'Initial bot setup!\nnRequires ~',
+            description: 'Initial bot setup!\nRequires ~',
             examples: ['You\'re on your own LOL!'],
             args: [
                 {
