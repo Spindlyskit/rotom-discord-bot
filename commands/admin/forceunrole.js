@@ -3,19 +3,19 @@
 const { Command } = require('discord.js-commando');
 const { symbols, hierarchy, top, aliases } = require("../../data/ranks.js");
 
-module.exports = class ForceroleCommand extends Command {
+module.exports = class forceunroleCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'forcerole',
+            name: 'forceunrole',
             group: 'admin',
-            memberName: 'forcerole',
-            description: 'forcerole a user.\nRequires ~',
-            examples: ['forcerole Spindlyskit Administrator'],
+            memberName: 'forceunrole',
+            description: 'forceunrole a user.\nRequires ~',
+            examples: ['forceunrole Spindlyskit Administrator'],
             aliases: ['globalforceunrole', 'forceremoverole'],
             args: [
                 {
                     key: 'member',
-                    prompt: 'What member should be forceroled?',
+                    prompt: 'What member should be forceunroled?',
                     type: 'member'
                 },
                 {
@@ -36,7 +36,7 @@ module.exports = class ForceroleCommand extends Command {
         
         if (!member.roles.has(role.id)) return msg.say(`Member doesn't have ${role.name}!`);
 
-        member.removeRole(role, `${msg.author.tag} used forcerole command in ${msg.channel.name}`)
+        member.removeRole(role, `${msg.author.tag} used forceunrole command in ${msg.channel.name}`)
         .then(role => msg.say(`removed ${role.name} from ${member.user.tag}`))
         .catch(console.error);
     }
