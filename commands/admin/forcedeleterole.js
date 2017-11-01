@@ -36,7 +36,7 @@ module.exports = class ForcedeleteroleCommand extends Command {
             return msg.say(`Cannot delete ${rolename}`);
         }
         finally {
-            return msg.say(`Delete ${rolename}`);
+            return msg.say(`Deleted ${rolename}`);
         }
     }
 };

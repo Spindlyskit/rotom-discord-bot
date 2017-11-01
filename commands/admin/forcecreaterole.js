@@ -10,7 +10,7 @@ module.exports = class forcecreateroleCommand extends Command {
             group: 'admin',
             memberName: 'forcecreaterole',
             description: 'forcecreaterole a user.\nRequires ~',
-            examples: ['forcecreaterole Spindlyskit Administrator'],
+            examples: ['forcecreaterole The-Very-Best 100 #c0ffee 8 false true'],
             aliases: ['globalforcecreaterole'],
             args: [
                 {
