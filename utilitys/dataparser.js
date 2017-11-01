@@ -18,6 +18,14 @@ class EmbedGenerator {
         this.parser = parser;
     }
 
+    quick(title, text) {
+        return new RichEmbed()
+        .setDescription(text)
+        .setTitle(title)
+        .setColor(config.embedColor)
+        .setTimestamp();
+    }
+
     generateAbilityEmbed(ability, parser) {
         return new RichEmbed()
         .setDescription(`${ability.desc}`)

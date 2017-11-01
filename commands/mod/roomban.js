@@ -8,7 +8,7 @@ module.exports = class RoombanCommand extends Command {
             name: 'roomban',
             group: 'mod',
             memberName: 'roomban',
-            description: 'Remove a user from the channel this command is used in.',
+            description: 'Remove a user from the channel this command is used in.\nRequires @, &, ~',
             examples: ['roomban @Spindlyskit#6874', 'roomban 267732237045202945'],
             clientPermissions: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
             aliases: ['roomblacklist'],

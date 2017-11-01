@@ -8,7 +8,7 @@ module.exports = class RoomwhitelistCommand extends Command {
             name: 'roomwhitelist',
             group: 'mod',
             memberName: 'roomwhitelist',
-            description: 'Remove a user from the channel this command is used in.',
+            description: 'Alllow a user to see the channel this command is used in.\nRequires @, &, ~',
             examples: ['roomwhitelist @Spindlyskit#6874', 'roomwhitelist 267732237045202945'],
             clientPermissions: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
             aliases: ['roomforceunban'],

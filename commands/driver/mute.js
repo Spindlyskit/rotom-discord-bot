@@ -7,7 +7,7 @@ module.exports = class MuteCommand extends Command {
             name: 'mute',
             group: 'driver',
             memberName: 'mute',
-            description: 'Mutes the target user.',
+            description: 'Mutes the target user.\nRequires %, @, &, ~',
             examples: ['mute @User!', 'mute @User 10'],
             clientPermissions: ['MANAGE_ROLES'],
             args: [

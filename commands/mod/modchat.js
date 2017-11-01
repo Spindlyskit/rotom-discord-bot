@@ -1,7 +1,7 @@
 'use strict'
 
 const { Command } = require('discord.js-commando');
-const { symbols, hierarchy, top, aliases } = require("../../data/ranks.js")
+const { symbols, hierarchy, top, aliases } = require("../../data/ranks.js");
 
 module.exports = class ModchatCommand extends Command {
     constructor(client) {
