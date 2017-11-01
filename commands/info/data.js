@@ -24,7 +24,7 @@ module.exports = class DataCommand extends Command {
     run(msg, { arg1 }) {
         let parser = msg.client.parser;
         let embedGen = parser.EmbedGenerator;
-
+        arg1 = arg1.replace(" ", "");
         if (parser.getAliasOf(arg1)) arg1 = parser.getAliasOf(arg1);
         let res = parser.parse(arg1);
         if (!res) return msg.say(`${arg1.toLowerCase()} is not a pokemon/item/move/ability!`)
