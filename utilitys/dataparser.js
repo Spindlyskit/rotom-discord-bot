@@ -84,14 +84,90 @@ class EmbedGenerator {
         .setTimestamp();
     }
     generateMoveEmbed(move, parser) {
+        let details = {
+            "Priority": move.priority,
+            "Gen": move.gen || 'CAP',
+        };
+
+        if (move.secondary || move.secondaries) details["Secondary effect"] = "";
+        if (move.flags['contact']) details["Contact"] = "";
+        if (move.flags['sound']) details["Sound"] = "";
+        if (move.flags['bullet']) details["Bullet"] = "";
+        if (move.flags['pulse']) details["Pulse"] = "";
+        if (!move.flags['protect'] && !/(ally|self)/i.test(move.target)) details["Bypasses Protect"] = "";
+        if (move.flags['authentic']) details["Bypasses Substitutes"] = "";
+        if (move.flags['defrost']) details["Thaws user"] = "";
+        if (move.flags['bite']) details["Bite"] = "";
+        if (move.flags['punch']) details["Punch"] = "";
+        if (move.flags['powder']) details["Powder"] = "";
+        if (move.flags['reflectable']) details["Bounceable"] = "";
+        if (move.flags['gravity']) details["Suppressed by Gravity"] = "";
+
+        if (move.zMovePower) {
+            details["Z-Power"] = move.zMovePower;
+        } else if (move.zMoveEffect) {
+            details["Z-Effect"] = {
+                'clearnegativeboost': "Restores negative stat stages to 0",
+                'crit2': "Crit ratio +2",
+                'heal': "Restores HP 100%",
+                'curse': "Restores HP 100% if user is Ghost type, otherwise Attack +1",
+                'redirect': "Redirects opposing attacks to user",
+                'healreplacement': "Restores replacement's HP 100%",
+            }[move.zMoveEffect];
+        } else if (move.zMoveBoost) {
+            details["Z-Effect"] = "";
+            let boost = move.zMoveBoost;
+            let stats = {atk: 'Attack', def: 'Defense', spa: 'Sp. Atk', spd: 'Sp. Def', spe: 'Speed', accuracy: 'Accuracy', evasion: 'Evasiveness'};
+            for (let i in boost) {
+                details["Z-Effect"] += " " + stats[i] + " +" + boost[i];
+            }
+        } else {
+            details["Z-Effect"] = "None";
+        }
+
+        details["Target"] = {
+            'normal': "One Adjacent Pokmon",
+            'self': "User",
+            'adjacentAlly': "One Ally",
+            'adjacentAllyOrSelf': "User or Ally",
+            'adjacentFoe': "One Adjacent Opposing Pokmon",
+            'allAdjacentFoes': "All Adjacent Opponents",
+            'foeSide': "Opposing Side",
+            'allySide': "User's Side",
+            'allyTeam': "User's Side",
+            'allAdjacent': "All Adjacent Pokmon",
+            'any': "Any Pokmon",
+            'all': "All Pokmon",
+        }[move.target] || "Unknown";
+
+        if (move.id === 'mirrormove') {
+            details['https://pokemonshowdown.com/dex/moves/mirrormove'] = '';
+        }
+
         return new RichEmbed()
         .setAuthor(`${move.name}`)
         .setColor(config.embedColor)
         .setDescription(stripIndents`
         ${move.desc}`)
         .setTimestamp()
-        .addField(`Info`, `${move.type} - ${move.category}`)
-        .setFooter(`Priority: ${move.priority.toString()} |  Z-Effect: ${ move.hasOwnProperty("zMovePower") ? move.zMovePower.toString() : `+${Object.values(move.zMoveBoost).join("")} ${Object.keys(move.zMoveBoost).join("")}`} |  Target: ${move.target}`)
+        .addField(`Info`, stripIndents`
+        **Type:** ${move.type}
+        **Category:** ${move.category}
+        **Target:** ${details["Target"]}
+        **${details.hasOwnProperty("Z-Effect") ? `Z-Effect:** ${details["Z-Effect"]}` : `Z-Power:** ${details["Z-Power"]}`}`
+        + `${details.hasOwnProperty("Contact") ? `${details["Contact"]}\n` : ""}`
+        + `${details.hasOwnProperty("Sound") ? `${details["Sound"]}\n` : ""}`
+        + `${details.hasOwnProperty("Bullet") ? `${details["Bullet"]}\n` : ""}`
+        + `${details.hasOwnProperty("Pulse") ? `${details["Pulse"]}\n` : ""}`
+        + `${details.hasOwnProperty("Bypasses Protect") ? `${details["Bypasses Protect"]}\n` : ""}`
+        + `${details.hasOwnProperty("Bypasses Substitutes") ? `${details["Bypasses Substitutes"]}\n` : ""}`
+        + `${details.hasOwnProperty("Thaws user") ? `${details["Thaws user"]}\n` : ""}`
+        + `${details.hasOwnProperty("Bite") ? `${details["Bite"]}\n` : ""}`
+        + `${details.hasOwnProperty("Punch") ? `${details["Punch"]}\n` : ""}`
+        + `${details.hasOwnProperty("Powder") ? `${details["Powder"]}\n` : ""}`
+        + `${details.hasOwnProperty("Bounceable") ? `${details["Bounceable"]}\n` : ""}`
+        + `${details.hasOwnProperty("Suppressed by Gravity") ? `${details["Suppressed by Gravity"]}\n` : ""}
+        `)
     }
     generateWeakEmbed(weakChart, full) {
         if (full) {
