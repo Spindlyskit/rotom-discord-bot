@@ -11,7 +11,7 @@ module.exports = class ForceroleCommand extends Command {
             memberName: 'forcerole',
             description: 'forcerole a user.\nRequires ~',
             examples: ['forcerole Spindlyskit Administrator'],
-            aliases: ['globalforcerole'],
+            aliases: ['globalforceunrole', 'forceremoverole'],
             args: [
                 {
                     key: 'member',
@@ -21,7 +21,7 @@ module.exports = class ForceroleCommand extends Command {
                 {
                     key: 'role',
                     type: 'role',
-                    prompt: 'What role should <member> be forceroled to?',
+                    prompt: 'What role should <member> be forceremoved from?',
                 }
             ]
         });
@@ -34,8 +34,10 @@ module.exports = class ForceroleCommand extends Command {
     run(msg, { member, role }) {
         let client = msg.client;
         
-        member.addRole(role, `${msg.author.tag} used forcerole command in ${msg.channel.name}`)
-        .then(role => msg.say(`Added ${role.name} to ${member.user.tag}`))
+        if (!member.roles.has(role.id)) return msg.say(`Member doesn't have ${role.name}!`);
+
+        member.removeRole(role, `${msg.author.tag} used forcerole command in ${msg.channel.name}`)
+        .then(role => msg.say(`removed ${role.name} from ${member.user.tag}`))
         .catch(console.error);
     }
 };
