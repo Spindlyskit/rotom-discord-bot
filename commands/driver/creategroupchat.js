@@ -43,7 +43,7 @@ module.exports = class CreategroupchatCommand extends Command {
         let cat = guild.channels.find("id", catID);
         guild.createChannel(name, "text", {nsfw: nsfw, parent: cat, reason: `${msg.author.tag} used creategroupchat in ${msg.channel.name}!`})
         .then(channel => {
-            msg.say(`Created group chat ${name}(<#${channel.id}>)\nOther users can join this channel by using \`/join ${name}\`!`);
+            msg.say(`Created group chat ${name}(<#${channel.id}>)\nOther users can join this channel by using \`!join ${name}\`!`);
             channel.overwritePermissions(msg.author, {
                 VIEW_CHANNEL: true,
                 SEND_MESSAGES: true,

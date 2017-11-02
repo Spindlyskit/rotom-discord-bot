@@ -8,10 +8,10 @@ module.exports = class RoomwhitelistCommand extends Command {
             name: 'roomwhitelist',
             group: 'mod',
             memberName: 'roomwhitelist',
-            description: 'Alllow a user to see the channel this command is used in.\nRequires @, &, ~',
+            description: 'Alllow a user to see the channel this command is used in.\nRequires %, @, &, ~',
             examples: ['roomwhitelist @Spindlyskit#6874', 'roomwhitelist 267732237045202945'],
             clientPermissions: ['MANAGE_CHANNELS', 'MANAGE_ROLES'],
-            aliases: ['roomforceunban'],
+            aliases: ['roomforceunban', 'invite', 'adduser'],
             args: [
                 {
                     key: 'member',
@@ -23,7 +23,7 @@ module.exports = class RoomwhitelistCommand extends Command {
     }
 
     hasPermission(msg) {
-        return msg.client.rankmanager.hasRank("@", msg.guild, msg.member).ret;
+        return msg.client.rankmanager.hasRank("%", msg.guild, msg.member).ret;
     }
 
     run(msg, { member }) {
