@@ -1,6 +1,6 @@
 'use strict'
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const Matcher = require('did-you-mean');
 const stripIndents = require('common-tags').stripIndents;
 const config = require('config.json')('./config.json');
@@ -19,7 +19,7 @@ class EmbedGenerator {
     }
 
     quick(title, text) {
-        return new RichEmbed()
+        return new MessageEmbed()
         .setDescription(text)
         .setTitle(title)
         .setColor(config.embedColor)
@@ -27,7 +27,7 @@ class EmbedGenerator {
     }
 
     generateAbilityEmbed(ability, parser) {
-        return new RichEmbed()
+        return new MessageEmbed()
         .setDescription(`${ability.desc}`)
         .setAuthor(ability.name)
         .setColor(config.embedColor)
@@ -36,7 +36,7 @@ class EmbedGenerator {
     generatePokemonEmbed(pokemon, parser) {
         let weakChart = parser.weak(pokemon);
 
-        return new RichEmbed()
+        return new MessageEmbed()
         .setAuthor(`${pokemon.num.toString()} - ${pokemon.species}`)
         .setColor(config.embedColor)
         .setDescription(stripIndents`
@@ -76,7 +76,7 @@ class EmbedGenerator {
         **Color:** ${pokemon.color}`)
     }
     generateItemEmbed(item, parser) {
-        return new RichEmbed()
+        return new MessageEmbed()
         .setDescription(`${item.desc}`)
         .setAuthor(item.name)
         .setColor(config.embedColor)
@@ -144,7 +144,7 @@ class EmbedGenerator {
             details['https://pokemonshowdown.com/dex/moves/mirrormove'] = '';
         }
 
-        return new RichEmbed()
+        return new MessageEmbed()
         .setAuthor(`${move.name}`)
         .setColor(config.embedColor)
         .setDescription(stripIndents`
@@ -171,7 +171,7 @@ class EmbedGenerator {
     }
     generateWeakEmbed(weakChart, full) {
         if (full) {
-            return new RichEmbed()
+            return new MessageEmbed()
             .setDescription(stripIndents`
             \n*Damage multiplyers for ${weakChart.pokemon}*
             **Bug**: ${weakChart["Bug"]}
@@ -197,7 +197,7 @@ class EmbedGenerator {
             .setColor(config.embedColor)
             .setTimestamp();
         } else {
-            return new RichEmbed()
+            return new MessageEmbed()
             .setDescription(stripIndents`
             \n*Damage multiplyers for ${weakChart.pokemon}*
             *1x values are ommited use \`weak ${weakChart.pokemon} true\` to show.*`
@@ -232,13 +232,13 @@ class EmbedGenerator {
             for (let i=1; i<=ret.length; i++) {
                 final = final + `** **- gen ${ret[i-1].generation} ${ret[i-1].source} \n`
             }
-            return new RichEmbed()
+            return new MessageEmbed()
             .setAuthor(`${pokedex.BattlePokedex[pokemon].species} can learn ${moves.BattleMovedex[move].name}!`)
             .setColor(config.embedColor)
             .setDescription(final)
             .setTimestamp()
         } else {
-            return new RichEmbed()
+            return new MessageEmbed()
             .setAuthor(`${pokemon} can't learn ${move}!`)
             .setColor(config.embedColor)
             .setDescription(ret)
