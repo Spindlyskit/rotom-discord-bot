@@ -2,7 +2,7 @@
 
 const { Command } = require('discord.js-commando');
 const config = require('config.json')('./config.json')
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class DeclareCommand extends Command {
     constructor(client) {
@@ -57,7 +57,7 @@ module.exports = class DeclareCommand extends Command {
     run(msg, { channel, title, description, color, image }) {
         msg.delete();
         msg.guild.fetchMember(msg.client.user)
-        channel.sendEmbed(new RichEmbed()
+        channel.sendEmbed(new MessageEmbed()
             .setDescription(description)
             .setTitle(title)
             .setAuthor(msg.client.user.username, msg.client.user.avatarURL)

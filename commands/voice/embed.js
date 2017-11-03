@@ -2,7 +2,7 @@
 
 const { Command } = require('discord.js-commando');
 const config = require('config.json')('./config.json')
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class EmbedCommand extends Command {
     constructor(client) {
@@ -51,7 +51,7 @@ module.exports = class EmbedCommand extends Command {
 
     run(msg, { title, description, color, image }) {
         msg.delete();
-        msg.embed(new RichEmbed()
+        msg.embed(new MessageEmbed()
             .setDescription(description)
             .setTitle(title)
             .setAuthor(msg.author.username, msg.author.avatarURL)

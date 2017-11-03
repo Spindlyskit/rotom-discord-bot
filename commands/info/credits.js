@@ -2,7 +2,7 @@
 
 const { Command } = require('discord.js-commando');
 const config = require('config.json')('./config.json')
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const stripIndents = require('common-tags').stripIndents;
 
 module.exports = class CreditsCommand extends Command {
@@ -20,7 +20,7 @@ module.exports = class CreditsCommand extends Command {
     run(msg) {
         msg.client.fetchUser("164352557693534209")
         .then(function(spindly) {
-                msg.embed(new RichEmbed()
+                msg.embed(new MessageEmbed()
                     .setDescription(stripIndents`
                     **Spindlyskit#6874** - Lead developer
                     **Zarel#3732** - Pokemon showdown: the databases the bot parses
