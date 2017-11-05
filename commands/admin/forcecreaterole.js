@@ -62,7 +62,7 @@ module.exports = class forcecreateroleCommand extends Command {
         let client = msg.client;
         let guild = msg.guild;
 
-        guild.fetchMember(client.user)
+        guild.members.get(client.user)
             .then(function(clientmember){
             if (clientmember.highestRole.calculatedPosition < position) position = clientmember.highestRole.calculatedPosition;
             
