@@ -39,7 +39,7 @@ module.exports = class MuteCommand extends Command {
     run(msg, args) {
         const { user, time, reason } = args;
 
-        var mrole = msg.guild.roles.find('name', 'Muted');
+        let mrole = msg.guild.roles.find('name', 'Muted');
 
         if(!mrole) {
             msg.say("`Muted` role not found! Creating...");
@@ -74,7 +74,7 @@ module.exports = class MuteCommand extends Command {
             user.addRole(mrole, `${reason ? `${reason}` : 'Muted User!'}`);
             msg.say(`:ok_hand: ${msg.author}, muted ${user} ${time ? `for ${time} minutes!` : ''} ${reason ? `(\`${reason}\`)` : ''}`);
 
-            var info = [
+            let info = [
                 {key: "Target",
                     val: user.user.tag},
                 {key: "Time",
