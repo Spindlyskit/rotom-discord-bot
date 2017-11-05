@@ -54,7 +54,7 @@ module.exports = class EmbedCommand extends Command {
         msg.embed(new MessageEmbed()
             .setDescription(description)
             .setTitle(title)
-            .setAuthor(msg.author.username, msg.author.avatarURL)
+            .setAuthor(msg.author.username, msg.author.avatarURL())
             .setColor(`${color == '' ? config.embedColor : color}`)
             .setImage(`${image == '' ? image : null}`)
             .setTimestamp()

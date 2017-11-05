@@ -26,7 +26,7 @@ module.exports = class CreditsCommand extends Command {
             **thecommondude#8240** - Debuging & Testing
             **Ziggy#2207** - Debuging & Testing`)
             .setTitle('Showdown Bot Credits!')
-            .setAuthor(spindly.tag, spindly.avatarURL)
+            .setAuthor(spindly.tag, spindly.avatarURL())
             .setColor(config.embedColor)
             .setTimestamp()
         )

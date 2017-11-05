@@ -60,7 +60,7 @@ module.exports = class DeclareCommand extends Command {
         channel.sendEmbed(new MessageEmbed()
             .setDescription(description)
             .setTitle(title)
-            .setAuthor(msg.client.user.username, msg.client.user.avatarURL)
+            .setAuthor(msg.client.user.username, msg.client.user.avatarURL())
             .setColor(`${color == '' ? config.embedColor : color}`)
             .setImage(`${image == '' ? image : null}`)
             .setTimestamp()
