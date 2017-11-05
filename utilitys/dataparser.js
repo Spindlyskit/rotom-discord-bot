@@ -405,6 +405,7 @@ class Parser {
         }
         return weakChart;
     }
+
 }
 
 module.exports.Parser = Parser;
