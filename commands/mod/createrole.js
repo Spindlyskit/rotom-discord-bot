@@ -29,9 +29,9 @@ module.exports = class CreateroleCommand extends Command {
     run(msg, { name }) {
         let guild = msg.guild;
 
-        guild.createRole({
+        guild.createRole({data:{
         name: name,
-        })
+        }})
         .then(role => msg.say(`Created role ${role.name}`))
         .catch(console.error);
 

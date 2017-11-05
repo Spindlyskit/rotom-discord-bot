@@ -45,10 +45,10 @@ module.exports = class MuteCommand extends Command {
             msg.say("`Muted` role not found! Creating...");
 
             // Create a new role with data
-            msg.guild.createRole({
+            msg.guild.createRole({data: {
                 name: 'Muted',
                 mentionable: true
-            })
+            }})
                 .then(function(role) {
                     
                     for (const item of msg.guild.channels.values()) {

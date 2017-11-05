@@ -66,14 +66,14 @@ module.exports = class forcecreateroleCommand extends Command {
             .then(function(clientmember){
             if (clientmember.highestRole.calculatedPosition < position) position = clientmember.highestRole.calculatedPosition;
             
-            guild.createRole({
+            guild.createRole({data:{
                 name: name,
                 position: position,
                 color: `${color == '' ? null : color}`,
                 permissions: permissions,
                 hoist: hoist,
                 mentionable: mentionable
-                })
+                }})
                 .then(role => msg.say(`Created role ${role.name}`))
                 .catch(console.error)
         })
