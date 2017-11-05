@@ -21,10 +21,6 @@ module.exports = class DataCommand extends Command {
                     key: 'leaderrole',
                     prompt: 'What role should be used for Leader (&)?',
                     type: 'role'
-                },{
-                    key: 'roomownerrole',
-                    prompt: 'What role should be used for Room owner (#)?',
-                    type: 'role'
                 },
                 {
                     key: 'botrole',
@@ -54,10 +50,9 @@ module.exports = class DataCommand extends Command {
         return msg.client.rankmanager.hasRank("~", msg.guild, msg.member).ret;
     }
 
-    run(msg, { administratorrole, leaderrole, roomownerrole, botrole, moderatorrole, driverrole, voicerole }) {
+    run(msg, { administratorrole, leaderrole, botrole, moderatorrole, driverrole, voicerole }) {
         msg.client.rankmanager.setRank("administrator", msg.guild, administratorrole);            
-        msg.client.rankmanager.setRank("leader", msg.guild, leaderrole);        
-        msg.client.rankmanager.setRank("roomowner", msg.guild, roomownerrole);        
+        msg.client.rankmanager.setRank("leader", msg.guild, leaderrole);               
         msg.client.rankmanager.setRank("bot", msg.guild, botrole);        
         msg.client.rankmanager.setRank("moderator", msg.guild, moderatorrole);        
         msg.client.rankmanager.setRank("driver", msg.guild, driverrole);  
@@ -65,7 +60,6 @@ module.exports = class DataCommand extends Command {
         msg.say(stripIndents`Initialised as:
         administrator: ${administratorrole.name}
         leader: ${leaderrole.name}
-        roomowner: ${roomownerrole.name}
         bot: ${botrole.name}
         moderator: ${moderatorrole.name}
         driver: ${driverrole.name}
