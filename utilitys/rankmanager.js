@@ -61,7 +61,7 @@ class GuildRankManager {
     hasRank(rank, guild, member) {
         if (!guild) return false;
         let client = this.client;
-        if (client.settings.get("ownerOverwrite", false)) return {ret:true, message: `Owner overwrite`, code: 'owneroverwrite'};
+        if (client.settings.get("ownerOverwrite", false) && client.isOwner(member.user)) return {ret:true, message: `Owner overwrite`, code: 'owneroverwrite'};
         if (symbols.hasOwnProperty(rank)) rank = symbols[rank];
         if (aliases.hasOwnProperty(rank)) rank = aliases[rank];
 
