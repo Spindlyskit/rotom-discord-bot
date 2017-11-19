@@ -393,6 +393,7 @@ exports.BattleAliases = {
 	"miniorblue": "Minior",
 	"miniorindigo": "Minior",
 	"miniorviolet": "Minior",
+	"naga": "Naganadel",
 	"pokestargiant2": "Pokestar Giant",
 	"pokestarmonica2": "Pokestar Giant",
 	"pokestarufopropu1": "Pokestar UFO",
