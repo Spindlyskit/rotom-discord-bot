@@ -9,7 +9,8 @@ module.exports = class PruneCommand extends Command {
             group: 'mod',
             memberName: 'prune',
             description: 'Delete x messages.\nRequires @, &, ~',
-            examples: ['quickdeclare #general "Tournament Unbans" "Aegislash\nGengar-mega\nMagikarp"'],
+            aliases: ['purge', 'clean', 'p'],
+            examples: ['prune 10'],
             args: [
                 {
                     key: 'count',
