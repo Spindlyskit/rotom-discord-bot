@@ -34,7 +34,7 @@ module.exports = class QuickdeclareCommand extends Command {
     run(msg, { channel, description }) {
         msg.delete();
         msg.guild.members.fetch(msg.client.user)
-        channel.sendEmbed(new MessageEmbed()
+        channel.send('', new MessageEmbed()
             .setDescription(description)
             .setAuthor(msg.client.user.username, msg.client.user.avatarURL())
             .setColor(config.embedColor)

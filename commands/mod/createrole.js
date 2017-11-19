@@ -7,7 +7,7 @@ module.exports = class CreateroleCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'createrole',
-            group: 'admin',
+            group: 'mod',
             memberName: 'createrole',
             description: 'create a role.\nRequires @, &, ~',
             examples: ['createrole Voice'],

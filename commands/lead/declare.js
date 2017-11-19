@@ -57,7 +57,7 @@ module.exports = class DeclareCommand extends Command {
     run(msg, { channel, title, description, color, image }) {
         msg.delete();
         msg.guild.members.fetch(msg.client.user)
-        channel.sendEmbed(new MessageEmbed()
+        channel.send('', new MessageEmbed()
             .setDescription(description)
             .setTitle(title)
             .setAuthor(msg.client.user.username, msg.client.user.avatarURL())
