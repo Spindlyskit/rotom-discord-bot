@@ -210,7 +210,7 @@ module.exports = class GiveawayCommand extends Command {
                 }
                 break;
             case 'remind':
-                msg.user.createDM().then(dm => {
+                msg.author.createDM().then(dm => {
                     dm.send('', current.embed());
                 });
                 break;
