@@ -64,6 +64,6 @@ module.exports = class DeclareCommand extends Command {
             .setColor(`${color == '' ? config.embedColor : color}`)
             .setImage(`${image == '' ? image : null}`)
             .setTimestamp()
-        )
+        );
     }
 };
