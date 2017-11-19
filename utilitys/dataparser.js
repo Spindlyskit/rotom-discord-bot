@@ -153,6 +153,7 @@ class EmbedGenerator {
         .addField(`Info`, stripIndents`
         **Type:** ${move.type}
         **Category:** ${move.category}
+        **Base Power:** ${move.hasOwnProperty('basePower') ? move.basePower : 'N/A'}
         **Target:** ${details["Target"]}
         **${details.hasOwnProperty("Z-Effect") ? `Z-Effect:** ${details["Z-Effect"]}` : `Z-Power:** ${details["Z-Power"]}`}`
         + `${details.hasOwnProperty("Contact") ? `${details["Contact"]}\n` : ""}`
