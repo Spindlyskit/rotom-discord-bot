@@ -100,6 +100,18 @@ class QuestionGiveaway extends Giveaway {
     isCorrect(answer) {
         return answer.toLowerCase() == this.answer;
     }
+
+    embed() {
+        return new MessageEmbed()
+            .setDescription(`Prize given by ${this.giver.user.tag}\nQuestion: ${this.question}\nJoin by answering the question using \`!giveaway guess <answer>\``)
+            .setTitle('It\'s giveaway time!')
+            .setAuthor(this.creator.user.username, this.creator.user.avatarURL())
+            .setColor(config.embedColor)
+            .setThumbnail(`http://play.pokemonshowdown.com/sprites/xyani/${this.pokemon.species.toLowerCase().replace(" ", "")}.gif`)
+            .addField(this.pokemon.species,
+            `**OT:** ${this.ot}\n**TID:** ${this.tid}`)
+            .setFooter('Note: Please do not join if you don\'t have a 3ds, a copy of a gen VII game or are currently unable to receive the prize.');
+    }
 }
 
 module.exports.Giveaway = Giveaway; 
