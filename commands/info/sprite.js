@@ -24,7 +24,7 @@ module.exports = class SpriteCommand extends Command {
 
     run(msg, { arg1 }) {
         let parser = msg.client.parser;
-        let pkmn = parser.parserPokemon(arg1);
+        let pkmn = parser.parsePokemon(arg1);
 
         if (!pkmn) return msg.say(`${arg1} is not a pokemon!`);
         else return msg.embed(new MessageEmbed()
