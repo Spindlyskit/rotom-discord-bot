@@ -8,7 +8,7 @@ module.exports = class SpriteCommand extends Command {
         super(client, {
             name: 'sprite',
             aliases: ['img'],
-            group: 'sprite',
+            group: 'info',
             memberName: 'sprite',
             description: 'Get sprite for this pokemon.',
             examples: ['data <pokemon/item/move/ability>'],
