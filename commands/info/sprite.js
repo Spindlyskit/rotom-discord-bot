@@ -7,7 +7,6 @@ module.exports = class SpriteCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'sprite',
-            aliases: ['img'],
             group: 'info',
             memberName: 'sprite',
             description: 'Get sprite for this pokemon.',
@@ -29,5 +28,6 @@ module.exports = class SpriteCommand extends Command {
         if (!pkmn) return msg.say(`${arg1} is not a pokemon!`);
         else return msg.embed(new MessageEmbed()
         .setImage(`http://play.pokemonshowdown.com/sprites/xyani/${pkmn.species.toLowerCase().replace(" ", "").replace('-', '')}.gif`))
+        .setColor(config.embedColor);
     }
 };

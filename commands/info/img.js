@@ -2,15 +2,14 @@
 
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
-const config = require('config.json')('./config.json');
 
-module.exports = class ShinyspriteCommand extends Command {
+module.exports = class ImgCommand extends Command {
     constructor(client) {
         super(client, {
-            name: 'shinysprite',
+            name: 'img',
             group: 'info',
-            memberName: 'shinysprite',
-            description: 'Get sprite for this pokemon.',
+            memberName: 'img',
+            description: 'Get bw sprite for this pokemon.',
             examples: ['data <pokemon/item/move/ability>'],
             args: [
                 {
@@ -28,7 +27,7 @@ module.exports = class ShinyspriteCommand extends Command {
 
         if (!pkmn) return msg.say(`${arg1} is not a pokemon!`);
         else return msg.embed(new MessageEmbed()
-        .setImage(`http://play.pokemonshowdown.com/sprites/xyani-shiny/${pkmn.species.toLowerCase().replace(" ", "").replace('-', '')}.gif`))
+        .setImage(`http://play.pokemonshowdown.com/sprites/bw/${pkmn.species.toLowerCase().replace(" ", "").replace('-', '')}.png`))
         .setColor(config.embedColor);
     }
 };
