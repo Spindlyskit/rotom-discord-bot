@@ -47,7 +47,7 @@ class EmbedGenerator {
         **SpD:** ${pokemon.baseStats.spd}
         **Spe:** ${pokemon.baseStats.spe}
         **BST:** ${Object.values(pokemon.baseStats).reduce((a, b) => a + b, 0)}`)
-        .setThumbnail(`http://play.pokemonshowdown.com/sprites/xyani/${pokemon.species.toLowerCase().replace(" ", "")}.gif`)
+        .setThumbnail(`http://play.pokemonshowdown.com/sprites/xyani/${pokemon.species.toLowerCase().replace(" ", "").replace('-', '')}.gif`)
         .setTimestamp()
         .addField(`Types`, `${pokemon.types.join(", ")}`)
         .addField(`Abilities`, `${Object.values(pokemon.abilities).join(", ")}`)
@@ -295,7 +295,7 @@ class Parser {
         if (!pokedex.BattlePokedex.hasOwnProperty(name) && m.get(name)) name = m.get(name);
         name = name.toLowerCase().replace(" ", "");
         if (pokedex.BattlePokedex.hasOwnProperty(name)) return pokedex.BattlePokedex[name];
-        else throw new ReferenceError(`${name} is not a pokemon!`, 'dataparser.js', 102);
+        else return false;
     }
     parseItem(name) {
         let m = new Matcher(Object.keys(items.BattleItems).join(" "));
