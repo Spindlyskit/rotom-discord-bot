@@ -2,6 +2,7 @@
 
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
+const config = require('config.json')('./config.json');
 
 module.exports = class ImgCommand extends Command {
     constructor(client) {
