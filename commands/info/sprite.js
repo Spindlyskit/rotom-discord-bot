@@ -28,6 +28,6 @@ module.exports = class SpriteCommand extends Command {
 
         if (!pkmn) return msg.say(`${arg1} is not a pokemon!`);
         else return msg.embed(new MessageEmbed()
-        .setImage(`http://play.pokemonshowdown.com/sprites/xyani/${pokemon.species.toLowerCase().replace(" ", "").replace('-', '')}.gif`))
+        .setImage(`http://play.pokemonshowdown.com/sprites/xyani/${pkmn.species.toLowerCase().replace(" ", "").replace('-', '')}.gif`))
     }
 };
