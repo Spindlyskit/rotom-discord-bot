@@ -56,6 +56,14 @@ client
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
+	})
+	.on('message', msg => {
+		if (msg.guild.id == config.console.guild &&
+			msg.channel.id == config.console.channel
+			&& config.console.auth.indexOf(msg.author.id) >= 0) {
+				var cmdmsg = new commando.CommandMessage(msg, client.registry.findCommands('eval')[0], msg.content);
+				cmdmsg.run();
+			}
 	});
 
 client.registry
