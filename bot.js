@@ -7,14 +7,21 @@ const sqlite = require('sqlite');
 const config = require('config.json')('./config.json');
 const dataparser = require('./utilitys/dataparser.js');
 const rankmanager = require('./utilitys/rankmanager.js')
+const cleverbotio = require('cleverbot.io');
 
 const client = new commando.Client({
 	owner: config.owner,
-	commandPrefix: '!'
+	commandPrefix: '!',
+	unknownCommandResponse: false
 });
 
 client.parser = new dataparser.Parser(client);;
 client.rankmanager = new rankmanager.GuildRankManager(client);
+var cleverbot = new cleverbotio(config.cleverbot.user, config.cleverbot.key);
+cleverbot.setNick(config.cleverbot.session);
+cleverbot.create(function (err, session) {
+	client.cleverbot = cleverbot;
+});
 
 client
 	.on('error', console.error)
@@ -58,11 +65,21 @@ client
 		`);
 	})
 	.on('message', msg => {
-		if (msg.guild.id == config.console.guild &&
-			msg.channel.id == config.console.channel
-			&& config.console.auth.indexOf(msg.author.id) >= 0) {
-				var cmdmsg = new commando.CommandMessage(msg, client.registry.findCommands('eval')[0], msg.content);
-				cmdmsg.run();
+		if (msg.channel.type != 'dm') {
+				if (msg.guild.id == config.console.guild
+					&& msg.channel.id == config.console.channel
+					&& config.console.auth.indexOf(msg.author.id) >= 0) {
+						var cmdmsg = new commando.CommandMessage(msg, client.registry.findCommands('eval')[0], msg.content);
+						cmdmsg.run();
+					}
+					if (msg.mentions.has(client.user.id)
+						&& client.provider.get(msg.guild, 'disableClever', false)) {
+						msg.channel.startTyping();
+						client.cleverbot.ask(msg.content, function (err, response) {
+							msg.reply(response);
+							msg.channel.stopTyping();
+						});
+					}
 			}
 	});
 

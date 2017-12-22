@@ -5,6 +5,7 @@
   "main": "bot.js",
   "dependencies": {
     "bufferutil": "^3.0.1",
+    "cleverbot.io": "^1.0.4",
     "config.json": "0.0.4",
     "did-you-mean": "0.0.1",
     "discord.js": "github:hydrabolt/discord.js",
