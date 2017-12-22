@@ -73,7 +73,7 @@ client
 						cmdmsg.run();
 					}
 					if (msg.mentions.has(client.user.id)
-						&& client.provider.get(msg.guild, 'disableClever', false)) {
+						&& client.provider.get(msg.guild, 'disableClever', true)) {
 						msg.channel.startTyping();
 						client.cleverbot.ask(msg.content, function (err, response) {
 							msg.reply(response);
