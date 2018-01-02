@@ -28,7 +28,7 @@ class EmbedGenerator {
 
     generateAbilityEmbed(ability, parser) {
         return new MessageEmbed()
-        .setDescription(`${ability.desc}`)
+        .setDescription(ability.desc ? ability.desc : ability.shortDesc)
         .setAuthor(ability.name)
         .setColor(config.embedColor)
         .setTimestamp();
