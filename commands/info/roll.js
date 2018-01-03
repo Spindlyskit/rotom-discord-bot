@@ -21,7 +21,7 @@ module.exports = class RollCommand extends Command {
                     key: 'roll',
                     prompt: 'What die/dice would you like to roll?',
                     type: 'string',
-                    validate: text => text.match(/([1-9]+d[1-9]+)|([1-9]+)/)
+                    validate: text => text.match(/([1-9]+d[1-9]+)|([1-9]+)|([1-9]+\-[1-9]+)/)
                 }
             ]
         });
@@ -46,14 +46,29 @@ module.exports = class RollCommand extends Command {
                 total+=t;
             }
 
-            msg.say(`🎲 Rolled ${count}d${die} 🎲\nYou got ${total} (${rolls.join('+')})`);
+            return msg.say(`🎲 Rolled ${count}d${die} 🎲\n🎲 You got ${total} (${rolls.join('+')}) 🎲`);
+        } else if (roll.indexOf('-') >= 0) {
+            var splits = roll.split('-');
+
+            var min = parseInt(splits[0]);
+            var max   = parseInt(splits[1]);
+
+            if ((max - min) > 1000) {
+                return msg.say('Cannot roll!\nNumbers too big!');
+            }
+
+            if (min > max) {
+                return msg.say(`${min} is greater than ${max}!`);
+            }
+
+            return msg.say(`🎲 Created number between ${min} and ${max} 🎲\n🎲 You got ${generateRandomInteger(min, max)}! 🎲`);
         } else {
             if (parseInt(roll) > 500) {
                 return msg.say('Cannot roll!\nNumbers too big!');
             }
 
             var t = generateRandomInteger(1, parseInt(roll));
-            msg.say(`🎲 Rolled 1d${roll} 🎲\n🎲 You got ${t} 🎲`);
+            return msg.say(`🎲 Rolled 1d${roll} 🎲\n🎲 You got ${t} 🎲`);
         }
     }
 };
