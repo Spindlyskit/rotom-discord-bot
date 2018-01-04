@@ -4,7 +4,6 @@ const { MessageEmbed } = require('discord.js');
 const Matcher = require('did-you-mean');
 const stripIndents = require('common-tags').stripIndents;
 const config = require('config.json')('./config.json');
-const urlExists = require('url-exists');
 
 const abilities = require("../data/abilities.js");
 const aliases = require("../data/aliases.js");
