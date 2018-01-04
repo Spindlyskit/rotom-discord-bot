@@ -24,11 +24,12 @@ module.exports = class ShinyimgCommand extends Command {
 
     run(msg, { arg1 }) {
         let parser = msg.client.parser;
-        let pkmn = parser.parsePokemon(arg1);
+        let img = parser.getSprite(arg1, 'bw-shiny', 'png');
 
-        if (!pkmn) return msg.say(`${arg1} is not a pokemon!`);
-        else return msg.embed(new MessageEmbed()
+        if (!img) return msg.say(`${arg1} is not a Pokémon!`);
+
+        return msg.embed(new MessageEmbed()
         .setColor(config.embedColor)
-        .setImage(`http://play.pokemonshowdown.com/sprites/bw-shiny/${pkmn.species.toLowerCase().replace(" ", "").replace('-', '')}.png`))
+        .setImage(img));
     }
 };

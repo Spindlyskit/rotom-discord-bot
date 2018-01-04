@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js');
 const Matcher = require('did-you-mean');
 const stripIndents = require('common-tags').stripIndents;
 const config = require('config.json')('./config.json');
+const urlExists = require('url-exists');
 
 const abilities = require("../data/abilities.js");
 const aliases = require("../data/aliases.js");
@@ -327,7 +328,27 @@ class Parser {
             } 
         }
         return false;
+    } 
+
+    getSprite(pkmn, dir='xyani', format='gif') {
+        let pngName = function(str) {
+            return str.toLowerCase().replace(" ", "").replace('-', '');
+        }
+
+        pkmn = this.parsePokemon(pkmn);
+
+        let text;
+
+        if (pkmn.hasOwnProperty('forme')) {
+            text = pngName(pkmn.baseSpecies) + '-' + pngName(pkmn.forme);
+        } else {
+            text = pngName(pkmn.species);
+        }
+
+        return `http://play.pokemonshowdown.com/sprites/${dir}/${text}.${format}`;
+        
     }
+    
 
     learn(pokemon, move) {
         let { BattleLearnsets } = learnsets;
