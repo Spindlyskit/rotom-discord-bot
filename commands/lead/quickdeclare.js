@@ -1,7 +1,7 @@
 'use strict'
 
 const { Command } = require('discord.js-commando');
-const config = require('config.json')('./config.json')
+const config = require('config.json')('./config.json');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = class QuickdeclareCommand extends Command {
