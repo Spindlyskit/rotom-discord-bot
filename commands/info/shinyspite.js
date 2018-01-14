@@ -30,6 +30,8 @@ module.exports = class ShinyspriteCommand extends Command {
 
         return msg.embed(new MessageEmbed()
         .setColor(config.embedColor)
-        .setImage(img));
+        .setImage(img)); 
     }
 };
+
+
