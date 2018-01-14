@@ -1,6 +1,23 @@
 {
-    "token": "TOKEN",
-    "owner": "YOUR ID",
-    "commandPrefix": "COMMAND PREFIX (DEFAULT: !)",
-    "embedColor": "HEX COLOR (DEFAULT: #3498db)"
+  "token": "PUT YOUR BOT TOKEN HERE",
+  "owner": "PUT YOUR ID HERE",
+  "commandPrefix": "PREFIX FOR COMMANDS",
+  "embedColor": "COLOR FOR EMBEDS",
+  "console": {
+    "guild": "GUILD FOR CONSOLE CHANNEL",
+    "channel": "CHANNEL FOR CONSOLE CHANNEL",
+    "auth": [
+      "USERS WHO CAN USE THE CONSOLE"
+   ]
+  },
+  "cleverbot": {
+    "user": "CLEVERBOT API USER",
+    "key": "CLEVERBOT API KEY",
+    "session": "CLEVERBOT API NICK"
+  },
+  "suggestions": {
+    "guild": "GUILD FOR SUGGESTIONS CHANNEL",
+    "channel": "CHANNEL FOR SUGGESTIONS"
   }
+}
+
