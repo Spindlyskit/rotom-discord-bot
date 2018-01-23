@@ -13581,6 +13581,17 @@ exports.BattlePokedex = {
 		evos: ["kerfluffle"],
 		eggGroups: ["Fairy", "Human-Like"],
 	},
+	spindlyskit: {
+		num: -116,
+		species: "Spindlyskit",
+		types: ["Electric", "Flying", "Fairy"],
+		baseStats: {hp: 150, atk: 5, def: 110, spa: 110, spd: 110, spe: 130},
+		abilities: {0: "Natural Cure", 1: "Aroma Veil", H: "Volt Absorb"},
+		heightm: 0.8,
+		weightkg: 1.8,
+		color: "Pink",
+		eggGroups: ["Fairy", "Human-Like"],
+	},
 	pokestarufo: {
 		num: -5001,
 		species: "Pokestar UFO",

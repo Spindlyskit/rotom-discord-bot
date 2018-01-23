@@ -12,6 +12,8 @@ const learnsets = require("../data/learnsets.js");
 const moves = require("../data/moves.js");
 const pokedex = require("../data/pokedex.js");
 const typechart = require("../data/typechart.js");
+const spriteoverrides = require("../data/spriteoverrides.js");
+
 
 var dtextrender = function(data) {
     var keys = Object.keys(data),
@@ -46,6 +48,10 @@ var getSprite = function(pkmn, dir='xyani', format='gif') {
         text = pngName(pkmn.species);
     }
 
+    if (spriteoverrides.hasOwnProperty(text)) {
+        return spriteoverrides[text];
+    }
+
     return `http://play.pokemonshowdown.com/sprites/${dir}/${text}.${format}`;
     
 }
@@ -73,10 +79,14 @@ class EmbedGenerator {
     generatePokemonEmbed(pokemon, parser) {
         let weakChart = parser.weak(pokemon);
         
+        console.log(getSprite(pokemon));
+
         return new MessageEmbed()
         .setAuthor(`${pokemon.num.toString()} - ${pokemon.species}`)
         .setColor(config.embedColor)
-        .setDescription(stripIndents`
+        .setThumbnail(getSprite(pokemon))
+        .setTimestamp()
+        .addField('Stats', stripIndents`
         **HP:** ${pokemon.baseStats.hp}
         **Atk:** ${pokemon.baseStats.atk}
         **Def:** ${pokemon.baseStats.def}
@@ -84,8 +94,6 @@ class EmbedGenerator {
         **SpD:** ${pokemon.baseStats.spd}
         **Spe:** ${pokemon.baseStats.spe}
         **BST:** ${Object.values(pokemon.baseStats).reduce((a, b) => a + b, 0)}`)
-        .setThumbnail(getSprite(pokemon))
-        .setTimestamp()
         .addField(`Types`, `${pokemon.types.join(", ")}`)
         .addField(`Abilities`, `${Object.values(pokemon.abilities).join(", ")}`)
         .addField(`Weakness & Resistance`,`${weakChart["Bug"] != 1 ? `\n**Bug**: ${weakChart["Bug"]}`: ""}`
@@ -355,22 +363,8 @@ class Parser {
     } 
 
     getSprite(pkmn, dir='xyani', format='gif') {
-        let pngName = function(str) {
-            return str.toLowerCase().replace(" ", "").replace('-', '');
-        }
-
         pkmn = this.parsePokemon(pkmn);
-
-        let text;
-
-        if (pkmn.hasOwnProperty('forme')) {
-            text = pngName(pkmn.baseSpecies) + '-' + pngName(pkmn.forme);
-        } else {
-            text = pngName(pkmn.species);
-        }
-
-        return `http://play.pokemonshowdown.com/sprites/${dir}/${text}.${format}`;
-        
+        return getSprite(pkmn, dir, format);
     }
     
     shuffle(array) {
