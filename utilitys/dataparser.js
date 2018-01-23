@@ -13,6 +13,43 @@ const moves = require("../data/moves.js");
 const pokedex = require("../data/pokedex.js");
 const typechart = require("../data/typechart.js");
 
+var dtextrender = function(data) {
+    var keys = Object.keys(data),
+    length = keys.length;
+    
+    var dtext, ptext = '';
+    
+    for (var i=0; i<length; i++) {
+        var curKey = keys[i];
+        
+        if (data[curKey] === '') {
+            ptext += `**✓** ${curKey}\n`;
+        } else {
+            dtext += `**${curKey}:** ${data[curKey]}\n`;
+        }
+        
+    }
+    
+    return {dtext: dtext, ptext: ptext};
+} 
+
+var getSprite = function(pkmn, dir='xyani', format='gif') {
+    let pngName = function(str) {
+        return str.toLowerCase().replace(" ", "").replace('-', '');
+    }
+
+    let text;
+
+    if (pkmn.hasOwnProperty('forme')) {
+        text = pngName(pkmn.baseSpecies) + '-' + pngName(pkmn.forme);
+    } else {
+        text = pngName(pkmn.species);
+    }
+
+    return `http://play.pokemonshowdown.com/sprites/${dir}/${text}.${format}`;
+    
+}
+
 class EmbedGenerator {
     constructor(parser) {
         this.parser = parser;
@@ -25,7 +62,7 @@ class EmbedGenerator {
         .setColor(config.embedColor)
         .setTimestamp();
     }
-
+    
     generateAbilityEmbed(ability, parser) {
         return new MessageEmbed()
         .setDescription(ability.desc ? ability.desc : ability.shortDesc)
@@ -35,7 +72,7 @@ class EmbedGenerator {
     }
     generatePokemonEmbed(pokemon, parser) {
         let weakChart = parser.weak(pokemon);
-
+        
         return new MessageEmbed()
         .setAuthor(`${pokemon.num.toString()} - ${pokemon.species}`)
         .setColor(config.embedColor)
@@ -47,13 +84,11 @@ class EmbedGenerator {
         **SpD:** ${pokemon.baseStats.spd}
         **Spe:** ${pokemon.baseStats.spe}
         **BST:** ${Object.values(pokemon.baseStats).reduce((a, b) => a + b, 0)}`)
-        .setThumbnail(`http://play.pokemonshowdown.com/sprites/xyani/${pokemon.species.toLowerCase().replace(" ", "").replace('-', '')}.gif`)
+        .setThumbnail(getSprite(pokemon))
         .setTimestamp()
         .addField(`Types`, `${pokemon.types.join(", ")}`)
         .addField(`Abilities`, `${Object.values(pokemon.abilities).join(", ")}`)
-        .addField(`Weakness & Resistance`, stripIndents`
-        *1x values are ommited use \`weak ${weakChart.pokemon} true\` to show.*`
-        + `${weakChart["Bug"] != 1 ? `\n**Bug**: ${weakChart["Bug"]}`: ""}`
+        .addField(`Weakness & Resistance`,`${weakChart["Bug"] != 1 ? `\n**Bug**: ${weakChart["Bug"]}`: ""}`
         + `${weakChart["Dark"] != 1 ? `\n**Dark**: ${weakChart["Dark"]}`: ""}`
         + `${weakChart["Dragon"] != 1 ? `\n**Dragon**: ${weakChart["Dragon"]}`: ""}`
         + `${weakChart["Electric"] != 1 ? `\n**Electric**: ${weakChart["Electric"]}`: ""}`
@@ -144,6 +179,8 @@ class EmbedGenerator {
             details['https://pokemonshowdown.com/dex/moves/mirrormove'] = '';
         }
 
+        const { dtext, ptext } = dtextrender(details);
+
         return new MessageEmbed()
         .setAuthor(`${move.name}`)
         .setColor(config.embedColor)
@@ -154,21 +191,8 @@ class EmbedGenerator {
         **Type:** ${move.type}
         **Category:** ${move.category}
         **Base Power:** ${move.hasOwnProperty('basePower') ? move.basePower : 'N/A'}
-        **Target:** ${details["Target"]}
-        **${details.hasOwnProperty("Z-Effect") ? `Z-Effect:** ${details["Z-Effect"]}` : `Z-Power:** ${details["Z-Power"]}`}`
-        + `${details.hasOwnProperty("Contact") ? `${details["Contact"]}\n` : ""}`
-        + `${details.hasOwnProperty("Sound") ? `${details["Sound"]}\n` : ""}`
-        + `${details.hasOwnProperty("Bullet") ? `${details["Bullet"]}\n` : ""}`
-        + `${details.hasOwnProperty("Pulse") ? `${details["Pulse"]}\n` : ""}`
-        + `${details.hasOwnProperty("Bypasses Protect") ? `${details["Bypasses Protect"]}\n` : ""}`
-        + `${details.hasOwnProperty("Bypasses Substitutes") ? `${details["Bypasses Substitutes"]}\n` : ""}`
-        + `${details.hasOwnProperty("Thaws user") ? `${details["Thaws user"]}\n` : ""}`
-        + `${details.hasOwnProperty("Bite") ? `${details["Bite"]}\n` : ""}`
-        + `${details.hasOwnProperty("Punch") ? `${details["Punch"]}\n` : ""}`
-        + `${details.hasOwnProperty("Powder") ? `${details["Powder"]}\n` : ""}`
-        + `${details.hasOwnProperty("Bounceable") ? `${details["Bounceable"]}\n` : ""}`
-        + `${details.hasOwnProperty("Suppressed by Gravity") ? `${details["Suppressed by Gravity"]}\n` : ""}
-        `)
+        ${dtext}`, true)
+        .addField('Properties', ptext ? ptext : 'No special properties', true);
     }
     generateWeakEmbed(weakChart, full) {
         if (full) {
@@ -246,6 +270,7 @@ class EmbedGenerator {
             .setTimestamp()
         }
     }
+
 }
 
 class Parser {
