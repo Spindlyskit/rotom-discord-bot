@@ -13589,7 +13589,7 @@ exports.BattlePokedex = {
 		abilities: {0: "Natural Cure", 1: "Aroma Veil", H: "Volt Absorb"},
 		heightm: 0.8,
 		weightkg: 1.8,
-		color: "Pink",
+		color: "Yellow",
 		eggGroups: ["Fairy", "Human-Like"],
 	},
 	pokestarufo: {
