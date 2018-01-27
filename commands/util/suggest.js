@@ -29,9 +29,9 @@ module.exports = class SuggestCommand extends Command {
     }
 
     run(msg, { title, description }) {
-        if (!config.hasOwnProperty('updates'))
+        if (!config.hasOwnProperty('suggestions'))
             return msg.say(`Sorry ${msg.author}, suggestions aren't configured correctly on this host of the bot. Please contact ${msg.client.owners.map(e => e.tag).join(' or ')}`);
-        else if (!(config.updates.hasOwnProperty('guild') && config.updates.hasOwnProperty('channel')))  
+        else if (!(config.suggestions.hasOwnProperty('guild') && config.suggestions.hasOwnProperty('channel')))  
             return msg.say(`Sorry ${msg.author}, suggestions aren't configured correctly on this host of the bot. Please contact ${msg.client.owners.map(e => e.tag).join(' or ')}`);
         
         let settings = msg.client.settings;
@@ -40,7 +40,7 @@ module.exports = class SuggestCommand extends Command {
         settings.set('feedbackid', fbid + 1);
 
         msg.client.guilds.find('id', config.suggestions.guild)
-        .channels.find('id', config.updates.channel).send(new MessageEmbed()
+        .channels.find('id', config.suggestions.channel).send(new MessageEmbed()
         .setColor(config.embedColor)
         .addField('Title', title)
         .addField('Description', description)
