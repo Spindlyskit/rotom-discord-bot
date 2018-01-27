@@ -40,7 +40,7 @@ module.exports = class SuggestCommand extends Command {
         settings.set('feedbackid', fbid + 1);
 
         msg.client.guilds.find('id', config.suggestions.guild)
-        .channels.find('id', config.suggestions.channel).send(new MessageEmbed()
+        .channels.find('id', config.updates.channel).send(new MessageEmbed()
         .setColor(config.embedColor)
         .addField('Title', title)
         .addField('Description', description)

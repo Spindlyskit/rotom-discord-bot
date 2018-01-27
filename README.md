@@ -22,4 +22,4 @@ If you encounter any bugs or need help, create an issue on the issue tracker. Pl
  * Screenshots and/or gifs, if necessary
 
 ## Credits
- * [Zarel's PokemonShowdown](https://github.com/Zarel/Pokemon-Showdown), Provides the databases the bot parses and heavily inspires the features.
+ * [Zarel's Pokemon Showdown](https://github.com/Zarel/Pokemon-Showdown), Provides the databases the bot parses and heavily inspires the features.
