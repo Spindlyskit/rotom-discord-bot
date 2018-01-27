@@ -1,11 +1,13 @@
 ## ![logo](assets/img/pfp.png "logo") 
-# Showdown for Discord
-## Like pokemon showdown but in your server
+# Rotom Bot for Discord
+## Like pokemon showdown but in your discord server
 
-### [Add Showdown! to your server](https://discordapp.com/oauth2/authorize?client_id=372780979145801729&scope=bot&permissions=66186303)
+Rotom is a discord bot designed to replicate some of [Pokemon Showdown's](https://github.com/Zarel/Pokemon-Showdown) commands in discord. This allows it to function as a pokédex as well as a multi-purpose bot.
+
+### [Add Rotom to your server](https://discordapp.com/oauth2/authorize?client_id=372780979145801729&scope=bot&permissions=66186303)
 
 ## Installation
-Showdown requires NodeJS 7.0+ however 8.0+ is recommended because it's best to be on the latest stable. In order to run your own local copy follow the steps below!
+Rotom requires NodeJS 7.0+ however 8.0+ is recommended because it's best to be on the latest stable. In order to run your own local copy follow the steps below!
 
 1. Download this repository.
 2. Rename `config-example.json` to `config.json` and change the values for your bot.
