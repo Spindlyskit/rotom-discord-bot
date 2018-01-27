@@ -29,9 +29,9 @@ module.exports = class SuggestCommand extends Command {
     }
 
     run(msg, { title, description }) {
-        if (!config.hasOwnProperty('suggestions'))
+        if (!config.hasOwnProperty('updates'))
             return msg.say(`Sorry ${msg.author}, suggestions aren't configured correctly on this host of the bot. Please contact ${msg.client.owners.map(e => e.tag).join(' or ')}`);
-        else if (!(config.suggestions.hasOwnProperty('guild') && config.suggestions.hasOwnProperty('channel')))  
+        else if (!(config.updates.hasOwnProperty('guild') && config.updates.hasOwnProperty('channel')))  
             return msg.say(`Sorry ${msg.author}, suggestions aren't configured correctly on this host of the bot. Please contact ${msg.client.owners.map(e => e.tag).join(' or ')}`);
         
         let settings = msg.client.settings;
