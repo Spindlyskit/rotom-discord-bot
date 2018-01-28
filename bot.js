@@ -1,8 +1,10 @@
 'use strict'
 
 const commando = require('discord.js-commando');
+const { MessageEmbed } = require('discord.js');
 const path = require('path');
 const oneLine = require('common-tags').oneLine;
+const stripIndents = require('common-tags').stripIndents;
 const sqlite = require('sqlite');
 const config = require('config.json')('./config.json');
 const dataparser = require('./utilitys/dataparser.js');
@@ -82,6 +84,24 @@ client
 						});
 					}
 			}
+	})
+	.on('guildCreate', guild => {
+		if (!config.guildUpdates) return;
+		if (!config.guildUpdates.guild || !config.guildUpdates.channel) return;
+
+		client.guilds.get(config.guildUpdates.guild)
+		.channels.get(config.guildUpdates.channel)
+		.send(new MessageEmbed()
+		.setAuthor(client.user.username, client.user.avatarURL())
+		.setTitle('New guild joined!')
+		.setColor('#19da2c')
+		.addField('Guild Details', stripIndents`Name - ${guild.name}
+		ID - ${guild.id}
+		Member Count - ${guild.memberCount} ${guild.large ? '(Large)' : ''}
+		Owner - ${guild.owner} (${guild.ownerID})
+		Region - ${guild.region}
+		Verification Level - ${guild.verificationLevel}
+		Verified - ${guild.verified}`));
 	});
 
 client.registry
