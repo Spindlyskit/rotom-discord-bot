@@ -14,12 +14,13 @@ const cleverbotio = require('cleverbot.io');
 const client = new commando.Client({
 	owner: config.owner,
 	commandPrefix: '!',
-	unknownCommandResponse: false
+	unknownCommandResponse: false,
+	invite: config.invite
 });
 
 client.parser = new dataparser.Parser(client);;
 client.rankmanager = new rankmanager.GuildRankManager(client);
-var cleverbot = new cleverbotio(config.cleverbot.user, config.cleverbot.key);
+let cleverbot = new cleverbotio(config.cleverbot.user, config.cleverbot.key);
 cleverbot.setNick(config.cleverbot.session);
 cleverbot.create(function (err, session) {
 	client.cleverbot = cleverbot;
@@ -71,7 +72,7 @@ client
 				if (msg.guild.id == config.console.guild
 					&& msg.channel.id == config.console.channel
 					&& config.console.auth.indexOf(msg.author.id) >= 0) {
-						var cmdmsg = new commando.CommandMessage(msg, client.registry.findCommands('eval')[0], msg.content);
+						let cmdmsg = new commando.CommandMessage(msg, client.registry.findCommands('eval')[0], msg.content);
 						cmdmsg.run();
 					}
 					if (msg.mentions.has(client.user.id)

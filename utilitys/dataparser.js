@@ -15,14 +15,14 @@ const typechart = require("../data/typechart.js");
 const spriteoverrides = require("../data/spriteoverrides.js");
 
 
-var dtextrender = function(data) {
-    var keys = Object.keys(data),
+let dtextrender = function(data) {
+    let keys = Object.keys(data),
     length = keys.length;
     
-    var dtext, ptext = '';
+    let dtext, ptext = '';
     
-    for (var i=0; i<length; i++) {
-        var curKey = keys[i];
+    for (let i=0; i<length; i++) {
+        let curKey = keys[i];
         
         if (data[curKey] === '') {
             ptext += `**✓** ${curKey}\n`;
@@ -35,7 +35,7 @@ var dtextrender = function(data) {
     return {dtext: dtext, ptext: ptext};
 } 
 
-var getSprite = function(pkmn, dir='xyani', format='gif') {
+let getSprite = function(pkmn, dir='xyani', format='gif') {
     let pngName = function(str) {
         return str.toLowerCase().replace(" ", "").replace('-', '');
     }
@@ -368,7 +368,7 @@ class Parser {
     }
     
     shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
+        let currentIndex = array.length, temporaryValue, randomIndex;
       
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
