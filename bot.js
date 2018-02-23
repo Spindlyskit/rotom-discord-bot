@@ -9,7 +9,6 @@ const sqlite = require('sqlite');
 const config = require('config.json')('./config.json');
 const dataparser = require('./utilitys/dataparser.js');
 const rankmanager = require('./utilitys/rankmanager.js')
-const cleverbotio = require('cleverbot.io');
 
 const client = new commando.Client({
 	owner: config.owner,
@@ -20,11 +19,6 @@ const client = new commando.Client({
 
 client.parser = new dataparser.Parser(client);;
 client.rankmanager = new rankmanager.GuildRankManager(client);
-let cleverbot = new cleverbotio(config.cleverbot.user, config.cleverbot.key);
-cleverbot.setNick(config.cleverbot.session);
-cleverbot.create(function (err, session) {
-	client.cleverbot = cleverbot;
-});
 
 client
 	.on('error', console.error)
@@ -75,15 +69,15 @@ client
 						let cmdmsg = new commando.CommandMessage(msg, client.registry.findCommands('eval')[0], msg.content);
 						cmdmsg.run();
 					}
-					if (msg.mentions.has(client.user.id)
-						&& client.provider.get(msg.guild, 'disableClever', true)
-						&& !msg.mentions.everyone) {
-						msg.channel.startTyping();
-						client.cleverbot.ask(msg.content, function (err, response) {
-							msg.reply(response);
-							msg.channel.stopTyping();
-						});
-					}
+					// if (msg.mentions.has(client.user.id)
+					// 	&& client.provider.get(msg.guild, 'disableClever', true)
+					// 	&& !msg.mentions.everyone) {
+					// 	msg.channel.startTyping();
+					// 	client.cleverbot.ask(msg.content, function (err, response) {
+					// 		msg.reply(response);
+					// 		msg.channel.stopTyping();
+					// 	});
+					// }
 			}
 	})
 	.on('guildCreate', guild => {
